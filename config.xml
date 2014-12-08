@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<widget id="com.eruecco.microwave" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+  <name>microwave</name>
+  <description>A remote control app for Popcorn Time</description>
+  <author email="hola@oscarviquez.com" href="http://oscarviquez.com/">Oscar Viquez</author>
+  <content src="index.html"/>
+  <access origin="*"/>
+  <preference name="webviewbounce" value="false"/>
+  <preference name="UIWebViewBounce" value="false"/>
+  <preference name="DisallowOverscroll" value="true"/>
+  <preference name="BackupWebStorage" value="none"/>
+  <feature name="StatusBar">
+    <param name="ios-package" value="CDVStatusBar" onload="true"/>
+  </feature>
+  <platform name="android">
+    <icon src="icons/android/48x48.png" density="ldpi"/>
+    <icon src="icons/android/72x72.png" density="mdpi"/>
+    <icon src="icons/android/96x96.png" density="hdpi"/>
+    <icon src="icons/android/192x192.png" density="xhdpi"/>
+  </platform>
+</widget>

@@ -1,0 +1,78 @@
+<ion-view title="Configuration">
+  
+  <ion-content class="padding">
+
+    <div class="alert" ng-class="connected ? 'alert-success' : 'alert-warning'" ng-show="test">
+      <p><strong>You are <small ng-show="!connected">NOT</small> connected to Popcorn Time.</strong></p>
+      <p ng-show="connected"><small>API Version: {{connected.result.popcornVersion}}</small></p>
+    </div>
+    <!-- /.alert -->
+
+    <div class="alert alert-error" ng-show="error">
+      <p><small><strong>API Error:</strong> {{error.message}}</small></p>
+    </div>
+    <!-- /.alert -->
+
+    <div class="alert alert-info" ng-show="saved">
+      <p><strong>Changes saved!</strong></p>
+    </div>
+    <!-- /.alert -->
+    
+    <form name="configForm" ng-submit="configForm.$valid && saveConfig(config)" novalidate>
+      
+      <div class="list">
+
+        <div class="item item-divider">Popcorn Time API</div>
+
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">IP 
+            <small class="assertive" ng-show="formSubmitted && configForm.ip.$error.required">This is required.</small>
+            <small class="assertive" ng-show="formSubmitted && configForm.ip.$error.pattern">Incorrect Format.</small>
+          </span>
+
+          <input type="text" placeholder="0.0.0.0" name="ip" ng-model="config.ip" ng-pattern='/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/' required>
+        </label>
+        <!-- /.item -->
+
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">Port
+            <small class="assertive" ng-show="formSubmitted && configForm.port.$error.required">This is required.</small>
+            <small class="assertive" ng-show="formSubmitted && configForm.port.$error.pattern">Incorrect Format.</small>
+          </span>
+
+          <input type="text" placeholder="8008" name="port" ng-model="config.port" ng-pattern="/^[0-9]{1,7}$/" required>
+        </label>
+        <!-- /.item -->
+
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">Username
+            <small class="assertive" ng-show="formSubmitted && configForm.user.$error.required">This is required.</small>
+          </span>
+
+          <input type="text" placeholder="popcorn" name="user" ng-model="config.user" required>
+        </label>
+        <!-- /.item -->
+
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">Password
+            <small class="assertive" ng-show="formSubmitted && configForm.pass.$error.required">This is required.</small>
+          </span>
+
+          <input type="text" placeholder="popcorn" name="pass" ng-model="config.pass" required>
+        </label>
+        <!-- /.item -->
+
+      </div>
+      <!-- /.list -->
+
+      <duv class="button-bar">
+        <button type="submit" class="button button-small button-assertive" ng-click="submitAttempt();">Save</button>
+        <a class="button button-small button-energized" ng-click="testConfig();">Test</a>
+      </duv>
+
+    </form>
+    <!-- /.alert -->
+
+  </ion-content>
+
+</ion-view>

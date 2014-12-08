@@ -1,0 +1,32 @@
+.alert {
+  margin: 10px auto 20px;
+  padding: 15px;
+  background: $positive;
+  font-size: 16px;
+  font-weight:300;
+  -webkit-transition: all 1s ease-out;
+  -moz-transition: all 1s ease-out;
+  -o-transition: all 1s ease-out;
+  transition: all 1s ease-out;
+  color: #fff;
+
+  &.alert-error {
+    background: $assertive;
+  }
+
+  &.alert-warning {
+    background: $energized;
+  }
+
+  &.alert-success {
+    background: $balanced;
+  }
+
+  &.alert-info {
+    background: $calm;
+  }
+
+  p {
+    margin: 0;
+  }
+}
