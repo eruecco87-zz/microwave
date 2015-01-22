@@ -1,10 +1,10 @@
 angular.module('microwave.controllers', ['ionic', 'microwave.services'])
 
 
-.controller('ConfigCtrl', ['$timeout', '$scope', 'Config', 'Popcorn', function($timeout, $scope, Config, Popcorn) {
-
-  // Loads the config from the config service.
-  $scope.config = Config.load();
+/**
+ * Configuration Page Controller.
+ */
+.controller('ConfigCtrl', ['$timeout', '$scope', '$location', 'Config', 'Devices', 'Popcorn', function($timeout, $scope, $location, Config, Devices, Popcorn) {
 
   // Check for form submit to validate data.
   $scope.submitAttempt = function() {
@@ -13,23 +13,34 @@ angular.module('microwave.controllers', ['ionic', 'microwave.services'])
 
   }
 
-  // Saves the configuration form data.
-  $scope.saveConfig = function(config) {
+  // Saves the device form data.
+  $scope.saveDevice = function(config) {
 
-    Config.save(config);
+    // Sets the new device as active by default.
+    config.active = true;
+
+    // Saves the device.
+    Devices.save(config);
+
     $scope.test = false; // Hides test information.
-    $scope.saved = true;
+    $scope.saved = true; // Shows success message.
 
-    $timeout(function() { $scope.saved = false; }, 2000);
+    $timeout(function() {
+
+      // Redirects to the devices tab.
+      $location.path('/tab/devices');
+      $scope.saved = false; 
+
+    }, 1000);
 
   }
 
   // Pings the API to check for connection.
-  $scope.testConfig = function() {
+  $scope.testDevice = function(config) {
 
     $scope.test = true; // Displays test status.
 
-    Popcorn.ping($scope.config).then(function(ping) {
+    Popcorn.ping(config).then(function(ping) {
 
       if ( ping.error ) {
 
@@ -49,6 +60,118 @@ angular.module('microwave.controllers', ['ionic', 'microwave.services'])
 
 }])
 
+
+/**
+ * Devices List Controller.
+ */
+.controller('DevicesCtrl', ['$scope', 'Devices', 'Config', 'Popcorn', function($scope, Devices, Config, Popcorn) {
+
+  // Gets the device list.
+  $scope.devices = Devices.list();
+
+}])
+
+.controller('DevicesDetailsCtrl', ['$timeout', '$scope', '$stateParams', '$ionicPopup', '$location', 'Devices', 'Config', 'Popcorn', function($timeout, $scope, $stateParams, $ionicPopup, $location, Devices, Config, Popcorn) {
+
+  // Gets the device list.
+  $scope.device = Devices.get($stateParams.deviceId);
+
+  // Check for form submit to validate data.
+  $scope.submitAttempt = function() {
+
+    $scope.formSubmitted = true;
+
+  }
+
+  // Saves the device form data.
+  $scope.editDevice = function(config) {
+
+    Devices.edit(config, $stateParams.deviceId);
+
+    $scope.test = false; // Hides test information.
+    $scope.saved = true; // Shows success message.
+
+    $timeout(function() {
+
+      // Redirects to the devices tab.
+      $location.path('/tab/devices');
+      $scope.saved = false; 
+
+    }, 1000);
+
+  }
+
+  // Pings the API to check for connection.
+  $scope.testDevice = function(config) {
+
+    $scope.test = true; // Displays test status.
+
+    Popcorn.ping(config).then(function(ping) {
+
+      if ( ping.error ) {
+
+        $scope.error = ping.error; // Displays test error.
+        $scope.test = false // Hides test information.
+
+      } else {
+
+        $scope.connected = ping; // Displays test information.
+        $scope.error = false; // Removes test error if any.
+
+      }
+
+    });
+
+  }
+
+  $scope.setActive = function() {
+
+    // Sets the selected item as active;
+    Devices.setActive($stateParams.deviceId);
+
+    // Redirects to the devices tab.
+    $location.path('/tab/devices');
+
+    // Upatdes the scope with the current list.
+    $scope.devices = Devices.list();
+
+  }
+
+  // Removes the selected device from localstorage.
+  $scope.remove = function() {
+
+    $ionicPopup.show({
+      template: '<p>Are you sure you want to delete this device?</p>',
+      title: 'Delete Device',
+      scope: $scope,
+      buttons: [
+        { text: 'Cancel' },
+        {
+          text: '<b>Delete</b>',
+          type: 'button-assertive',
+          onTap: function(event) {
+
+            Devices.remove($stateParams.deviceId);
+
+            // Redirects to the devices tab.
+            $location.path('/tab/devices');
+
+            // Upatdes the scope with the current list.
+            $scope.devices = Devices.list();
+
+          }
+        },
+      ]
+    });
+
+  }
+
+}])
+
+
+/**
+ * Remote Control Controller.
+ */
 .controller('RemoteCtrl', ['$timeout', '$scope', '$ionicPopup', 'Popcorn', function($timeout, $scope, $ionicPopup, Popcorn) {
 
   // Popcorn Service Calls

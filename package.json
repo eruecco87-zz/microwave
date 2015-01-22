@@ -1,7 +1,7 @@
 {
   "name": "microwave",
-  "version": "1.0.0",
-  "description": "microwave: An Ionic project",
+  "version": "1.1.0",
+  "description": "microwave: A remote control app for Popcorn Time www.popcorntime.io",
   "dependencies": {
     "gulp": "^3.5.6",
     "gulp-sass": "^0.7.1",

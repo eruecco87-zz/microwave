@@ -47,6 +47,26 @@ angular.module('microwave', ['ionic', 'microwave.controllers', 'microwave.servic
       }
     })
 
+    .state('tab.devices', {
+      url: '/devices',
+      views: {
+        'tab-devices': {
+          templateUrl: 'templates/tab-devices.html',
+          controller: 'DevicesCtrl'
+        }
+      }
+    })
+
+    .state('tab.device-details', {
+      url: '/devices/:deviceId',
+      views: {
+        'tab-devices': {
+          templateUrl: 'templates/tab-devices-details.html',
+          controller: 'DevicesDetailsCtrl'
+        }
+      }
+    })
+
     .state('tab.config', {
       url: '/config',
       views: {

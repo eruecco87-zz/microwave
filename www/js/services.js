@@ -8,24 +8,190 @@ angular.module('microwave.services', ['angular-json-rpc'])
 
   return {
 
-    // Loads the localstorage config.
-    load: function() {
+  }
 
-      return JSON.parse($window.localStorage.getItem('microwave-config'));
+}])
 
-    },
 
-    // Saves the localstorage config.
+/**
+ * Service that interacts with localstorage to manage saved devices.
+ */
+.factory('Devices', ['$window', function($window) {
+
+  return {
+
+    // Saves the device into the localstorage devices object.
     save: function(config) {
 
-      $window.localStorage.setItem('microwave-config', angular.toJson(config));
+      // Stores localstorage config in an variable or initializes an array if null.
+      var configArray = $window.localStorage.getItem('microwave-devices') || [];
+
+      // Converts JSON string back to object.
+      if (configArray.length > 0) {
+
+        configArray = JSON.parse(configArray);
+
+        // Runs through all devices and deactivates them.
+        angular.forEach(configArray, function(value, key) {
+
+          configArray[key].active = false;
+
+        });
+
+
+      }
+
+      // Pushes the new config into the object.
+      configArray.push(config);
+
+      // Saves the compiled config object into a JSON string.
+      $window.localStorage.setItem('microwave-devices', JSON.stringify(configArray));
 
     },
 
-    // Clears the localstorage config.
-    clear: function() {
+    // Removes the device from the localstorage devices object.
+    remove: function(index) {
 
-      $window.localStorage.removeItem('microwave-config');
+      var deviceWasActive;
+
+      // Stores localstorage config in an variable.
+      var configArray = $window.localStorage.getItem('microwave-devices');
+
+      // Converts JSON string back to object.
+      if (configArray.length > 0) {
+
+        configArray = JSON.parse(configArray);
+
+      }
+
+      // Checks if the device about to be deleted was active.
+      if ( configArray[index].active === true ) {
+
+        deviceWasActive = true;
+
+      }
+
+      // Removes the selected device from the object.
+      configArray.splice(index, 1);
+
+
+      // If removed device was active set the first in the update list as active.
+      if ( deviceWasActive && configArray.length > 0 ) {
+
+        configArray[0].active = true;
+
+      }
+
+      // Saves the compiled config object into a JSON string.
+      $window.localStorage.setItem('microwave-devices', JSON.stringify(configArray));
+
+    },
+
+    // Gets a specific device from the localstorage devices object.
+    get: function(index) {
+
+
+      // Stores localstorage config in an variable.
+      var configArray = $window.localStorage.getItem('microwave-devices');
+
+      // Converts JSON string back to object.
+      if (configArray.length > 0) {
+
+        configArray = JSON.parse(configArray);
+
+      }
+
+      return configArray[index];
+
+    },
+
+    // Edits the device from the localstorage devices object.
+    edit: function(config, index) {
+
+      // Stores localstorage config in an variable.
+      var configArray = $window.localStorage.getItem('microwave-devices');
+
+      // Converts JSON string back to object.
+      if (configArray.length > 0) {
+
+        configArray = JSON.parse(configArray);
+
+      }
+
+      // Overrride the device's config values.
+      configArray[index].name = config.name;
+      configArray[index].ip = config.ip;
+      configArray[index].port = config.port;
+      configArray[index].user = config.user;
+      configArray[index].pass = config.pass;
+
+      // Saves the compiled config object into a JSON string.
+      $window.localStorage.setItem('microwave-devices', JSON.stringify(configArray));
+
+
+    },
+
+    // Loads the localstorage config.
+    list: function() {
+
+      return JSON.parse($window.localStorage.getItem('microwave-devices'))
+
+    },
+
+    setActive:  function(index) {
+
+      // Stores localstorage config in an variable.
+      var configArray = $window.localStorage.getItem('microwave-devices');
+
+      // Converts JSON string back to object.
+      if (configArray.length > 0) {
+
+        configArray = JSON.parse(configArray);
+
+      }
+
+      // Runs through all devices and deactivates them.
+      angular.forEach(configArray, function(value, key) {
+
+        configArray[key].active = false;
+
+      });
+
+      // Activates the selected device
+      configArray[index].active = true;
+
+      // Saves the compiled config object into a JSON string.
+      $window.localStorage.setItem('microwave-devices', JSON.stringify(configArray));
+
+    },
+
+    getActive: function() {
+
+      var activeDevice;
+
+      // Stores localstorage config in an variable.
+      var configArray = $window.localStorage.getItem('microwave-devices');
+
+      // Converts JSON string back to object.
+      if (configArray.length > 0) {
+
+        configArray = JSON.parse(configArray);
+
+      }
+
+      // Runs through all devices and stores the active device.
+      angular.forEach(configArray, function(value, key) {
+
+        if ( configArray[key].active === true ) {
+
+          activeDevice =  configArray[key];
+
+        }
+
+      });
+
+      return activeDevice;
+
 
     }
 
@@ -37,7 +203,7 @@ angular.module('microwave.services', ['angular-json-rpc'])
 /**
  * Popcorn Time API Wrapper.
  */
-.factory('Popcorn', ['Config', '$http', '$q', function(Config, $http, $q) {
+.factory('Popcorn', ['Devices', '$http', '$q', function(Devices, $http, $q) {
 
   // Global deferred object to return API responses.
   var deferred;
@@ -49,7 +215,7 @@ angular.module('microwave.services', ['angular-json-rpc'])
     deferred = $q.defer();
 
     // Sets the config for API calls.
-    var apiConfig = configTest || Config.load(),
+    var apiConfig = configTest || Devices.getActive(),
         ipAddress = apiConfig.ip,
         portNumber = apiConfig.port,
         username = apiConfig.user,

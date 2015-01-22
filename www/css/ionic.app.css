@@ -10071,3 +10071,13 @@ $ios-transition-box-shadow-end: -200px 0px 200px rgba(0,0,0,0.15), -5px 0px 5px 
   margin: 0 0 -25px; }
   .remote-control .row .clear-search {
     margin-top: 20px; }
+
+.device-list .device-title {
+  display: block;
+  font-weight: bold; }
+.device-list .device-ip {
+  font-size: 12px; }
+.device-list .active-device {
+  background: #8a6de9; }
+  .device-list .active-device span {
+    color: #fff; }

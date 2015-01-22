@@ -1,0 +1,20 @@
+.device-list {
+
+  .device-title {
+    display: block;
+    font-weight: bold;
+  }
+
+  .device-ip {
+    font-size: 12px;
+  }
+
+  .active-device {
+    background: $royal;
+
+    span {
+      color: $light;
+    }
+  }
+  
+}
