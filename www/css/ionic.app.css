@@ -10081,3 +10081,6 @@ $ios-transition-box-shadow-end: -200px 0px 200px rgba(0,0,0,0.15), -5px 0px 5px 
   background: #8a6de9; }
   .device-list .active-device span {
     color: #fff; }
+
+.language-form {
+  margin-bottom: 20px; }

@@ -4,23 +4,55 @@ angular.module('microwave.controllers', ['ionic', 'microwave.services'])
 /**
  * Configuration Page Controller.
  */
-.controller('ConfigCtrl', ['$timeout', '$scope', '$location', 'Config', 'Devices', 'Popcorn', function($timeout, $scope, $location, Config, Devices, Popcorn) {
+.controller('ConfigCtrl', ['$timeout', '$scope', '$location', '$translate', 'Config', 'Devices', 'Popcorn', function($timeout, $scope, $location, $translate, Config, Devices, Popcorn) {
 
-  // Check for form submit to validate data.
-  $scope.submitAttempt = function() {
+  // Get a list of all available languages.
+  $scope.languages = Config.listLanguages();
 
-    $scope.formSubmitted = true;
+  // Run through each available language to match with selected language.
+  angular.forEach($scope.languages, function(val, index) {
+
+    if ( val.key === Config.getLanguage() ) {
+
+      $scope.language = $scope.languages[index];
+
+    }
+
+  });
+
+  // Set the language to the received language key.
+  $scope.setLanguage = function(language) {
+
+    Config.setLanguage(language.key);
+
+    // Immediatly translate the app to the selected language.
+    $translate.use(Config.getLanguage());
+
+    $scope.languageSaved = true; // Shows success message.
+
+    $timeout(function() {
+
+      $scope.languageSaved = false; // Hides success message.
+
+    }, 1000);
+
+  } 
+
+  // Check for device form submit to validate data.
+  $scope.deviceSubmitAttempt = function() {
+
+    $scope.deviceFormSubmitted = true;
 
   }
 
   // Saves the device form data.
-  $scope.saveDevice = function(config) {
+  $scope.saveDevice = function(device) {
 
     // Sets the new device as active by default.
-    config.active = true;
+    device.active = true;
 
     // Saves the device.
-    Devices.save(config);
+    Devices.save(device);
 
     $scope.test = false; // Hides test information.
     $scope.saved = true; // Shows success message.
@@ -36,11 +68,11 @@ angular.module('microwave.controllers', ['ionic', 'microwave.services'])
   }
 
   // Pings the API to check for connection.
-  $scope.testDevice = function(config) {
+  $scope.testDevice = function(device) {
 
     $scope.test = true; // Displays test status.
 
-    Popcorn.ping(config).then(function(ping) {
+    Popcorn.ping(device).then(function(ping) {
 
       if ( ping.error ) {
 
@@ -64,14 +96,18 @@ angular.module('microwave.controllers', ['ionic', 'microwave.services'])
 /**
  * Devices List Controller.
  */
-.controller('DevicesCtrl', ['$scope', 'Devices', 'Config', 'Popcorn', function($scope, Devices, Config, Popcorn) {
+.controller('DevicesCtrl', ['$scope', 'Devices', function($scope, Devices) {
 
   // Gets the device list.
   $scope.devices = Devices.list();
 
 }])
 
-.controller('DevicesDetailsCtrl', ['$timeout', '$scope', '$stateParams', '$ionicPopup', '$location', 'Devices', 'Config', 'Popcorn', function($timeout, $scope, $stateParams, $ionicPopup, $location, Devices, Config, Popcorn) {
+
+/**
+ * Devices Details Controller.
+ */
+.controller('DevicesDetailsCtrl', ['$timeout', '$scope', '$stateParams', '$translate', '$ionicPopup', '$location', 'Devices', 'Popcorn', function($timeout, $scope, $stateParams, $translate, $ionicPopup, $location, Devices, Popcorn) {
 
   // Gets the device list.
   $scope.device = Devices.get($stateParams.deviceId);
@@ -140,28 +176,38 @@ angular.module('microwave.controllers', ['ionic', 'microwave.services'])
   // Removes the selected device from localstorage.
   $scope.remove = function() {
 
-    $ionicPopup.show({
-      template: '<p>Are you sure you want to delete this device?</p>',
-      title: 'Delete Device',
-      scope: $scope,
-      buttons: [
-        { text: 'Cancel' },
-        {
-          text: '<b>Delete</b>',
-          type: 'button-assertive',
-          onTap: function(event) {
+    // Calls the translation service before initializing the delete modal.
+    $translate(['DEVICES_DETAILS.deleteModal.deleteModalTitle', 'DEVICES_DETAILS.deleteModal.deleteModalText', 'DEVICES_DETAILS.deleteModal.deleteModalCancel', 'DEVICES_DETAILS.deleteModal.deleteModalDelete']).then(function(translations) {
 
-            Devices.remove($stateParams.deviceId);
+      $scope.translations = translations;
 
-            // Redirects to the devices tab.
-            $location.path('/tab/devices');
+      $ionicPopup.show({
+        template: '<p>'+ $scope.translations['DEVICES_DETAILS.deleteModal.deleteModalText'] +'</p>',
+        title: $scope.translations['DEVICES_DETAILS.deleteModal.deleteModalTitle'],
+        scope: $scope,
+        buttons: [
+          { 
+            text: $scope.translations['DEVICES_DETAILS.deleteModal.deleteModalCancel'],
+            type: 'button-small'
+          },
+          {
+            text: '<b>'+ $scope.translations['DEVICES_DETAILS.deleteModal.deleteModalDelete'] +'</b>',
+            type: 'button-assertive button-small',
+            onTap: function(event) {
 
-            // Upatdes the scope with the current list.
-            $scope.devices = Devices.list();
+              Devices.remove($stateParams.deviceId);
 
-          }
-        },
-      ]
+              // Redirects to the devices tab.
+              $location.path('/tab/devices');
+
+              // Upatdes the scope with the current list.
+              $scope.devices = Devices.list();
+
+            }
+          },
+        ]
+      });
+
     });
 
   }
@@ -172,7 +218,7 @@ angular.module('microwave.controllers', ['ionic', 'microwave.services'])
 /**
  * Remote Control Controller.
  */
-.controller('RemoteCtrl', ['$timeout', '$scope', '$ionicPopup', 'Popcorn', function($timeout, $scope, $ionicPopup, Popcorn) {
+.controller('RemoteCtrl', ['$scope', '$translate', '$ionicPopup', 'Popcorn', function($scope, $translate, $ionicPopup, Popcorn) {
 
   // Popcorn Service Calls
   $scope.toggleTab = function() {
@@ -223,24 +269,35 @@ angular.module('microwave.controllers', ['ionic', 'microwave.services'])
 
       $scope.genresList = genres.result.genres;
 
-      $ionicPopup.show({
-        template: '<div class="list"><label class="item item-input item-select"><div class="input-label">Genre</div><select name="genre" ng-model="filterOption.genre" ng-options="o as o for o in genresList"></select></label></div>',
-        title: 'Select Genre',
-        scope: $scope,
-        buttons: [
-          { text: 'Cancel' },
-          {
-            text: '<b>Filter</b>',
-            type: 'button-assertive',
-            onTap: function(event) {
+      // Calls the translation service before initializing the filter modal.
+      $translate(['REMOTE.filterModal.filterModalTitle', 'REMOTE.filterModal.filterModalDropdown', 'REMOTE.filterModal.filterModalCancel', 'REMOTE.filterModal.filterModalFilter']).then(function(translations) {
 
-              var selectedGenre = $scope.filterOption.genre || 'All';
-              
-              Popcorn.filterGenre(selectedGenre);
+        $scope.translations = translations;
 
-            }
-          },
-        ]
+        // Displays filter modal.
+        $ionicPopup.show({
+          template: '<div class="list"><label class="item item-input item-select"><div class="input-label">'+ $scope.translations['REMOTE.filterModal.filterModalDropdown'] +'</div><select name="genre" ng-model="filterOption.genre" ng-options="o as o for o in genresList"></select></label></div>',
+          title: $scope.translations['REMOTE.filterModal.filterModalTitle'],
+          scope: $scope,
+          buttons: [
+            { 
+              text: $scope.translations['REMOTE.filterModal.filterModalCancel'],
+              type: 'button-small'
+            },
+            {
+              text: '<b>'+ $scope.translations['REMOTE.filterModal.filterModalFilter'] +'</b>',
+              type: 'button-assertive button-small',
+              onTap: function(event) {
+
+                var selectedGenre = $scope.filterOption.genre || 'All';
+                
+                Popcorn.filterGenre(selectedGenre);
+
+              }
+            },
+          ]
+        });
+
       });
 
     });
@@ -255,24 +312,34 @@ angular.module('microwave.controllers', ['ionic', 'microwave.services'])
 
       $scope.sortersList = sorters.result.sorters;
 
-      $ionicPopup.show({
-        template: '<div class="list"><label class="item item-input item-select"><div class="input-label">Sort by</div><select name="sort" ng-model="sortOption.sort" ng-options="o as o for o in sortersList"></select></label></div>',
-        title: 'Sort List',
-        scope: $scope,
-        buttons: [
-          { text: 'Cancel' },
-          {
-            text: '<b>Sort</b>',
-            type: 'button-assertive',
-            onTap: function(event) {
+      // Calls the translation service before initializing the sort modal.
+      $translate(['REMOTE.sortModal.sortModalTitle', 'REMOTE.sortModal.sortModalDropdown', 'REMOTE.sortModal.sortModalCancel', 'REMOTE.sortModal.sortModalSort']).then(function(translations) {
 
-              var selectedSorter = $scope.sortOption.sort || 'popularity';
-              
-              Popcorn.filterSorter(selectedSorter);
+        $scope.translations = translations;
 
-            }
-          },
-        ]
+        $ionicPopup.show({
+          template: '<div class="list"><label class="item item-input item-select"><div class="input-label">'+ $scope.translations['REMOTE.sortModal.sortModalDropdown'] +'</div><select name="sort" ng-model="sortOption.sort" ng-options="o as o for o in sortersList"></select></label></div>',
+          title: $scope.translations['REMOTE.sortModal.sortModalTitle'],
+          scope: $scope,
+          buttons: [
+            { 
+              text: $scope.translations['REMOTE.sortModal.sortModalCancel'],
+              type: 'button-small'
+            },
+            {
+              text: '<b>'+ $scope.translations['REMOTE.sortModal.sortModalSort'] +'</b>',
+              type: 'button-assertive button-small',
+              onTap: function(event) {
+
+                var selectedSorter = $scope.sortOption.sort || 'popularity';
+                
+                Popcorn.filterSorter(selectedSorter);
+
+              }
+            },
+          ]
+        });
+
       });
 
     });
@@ -385,24 +452,34 @@ angular.module('microwave.controllers', ['ionic', 'microwave.services'])
 
       $scope.subtitleList = subtitles.result.subtitles;
 
-      $ionicPopup.show({
-        template: '<div class="list"><label class="item item-input item-select"><div class="input-label">Language</div><select name="language" ng-model="subtitleOption.subtitle" ng-options="o as o for o in subtitleList"></select></label></div>',
-        title: 'Select Subtitles',
-        scope: $scope,
-        buttons: [
-          { text: 'Cancel' },
-          {
-            text: '<b>Set</b>',
-            type: 'button-assertive',
-            onTap: function(event) {
+      // Calls the translation service before initializing the subtitles modal.
+      $translate(['REMOTE.subtitlesModal.subtitlesModalTitle', 'REMOTE.subtitlesModal.subtitlesModalDropdown', 'REMOTE.subtitlesModal.subtitlesModalCancel', 'REMOTE.subtitlesModal.subtitlesModalSet']).then(function(translations) {
 
-              var selectedSubtitle = $scope.subtitleOption.subtitle || '';
-              
-              Popcorn.setSubtitle(selectedSubtitle);
+        $scope.translations = translations;
 
-            }
-          },
-        ]
+        $ionicPopup.show({
+          template: '<div class="list"><label class="item item-input item-select"><div class="input-label">'+ $scope.translations['REMOTE.subtitlesModal.subtitlesModalDropdown'] +'</div><select name="language" ng-model="subtitleOption.subtitle" ng-options="o as o for o in subtitleList"></select></label></div>',
+          title: $scope.translations['REMOTE.subtitlesModal.subtitlesModalTitle'],
+          scope: $scope,
+          buttons: [
+            { 
+              text: $scope.translations['REMOTE.subtitlesModal.subtitlesModalCancel'],
+              type: 'button-small'
+            },
+            {
+              text: '<b>'+ $scope.translations['REMOTE.subtitlesModal.subtitlesModalSet'] +'</b>',
+              type: 'button-assertive button-small',
+              onTap: function(event) {
+
+                var selectedSubtitle = $scope.subtitleOption.subtitle || '';
+                
+                Popcorn.setSubtitle(selectedSubtitle);
+
+              }
+            },
+          ]
+        });
+
       });
 
     });
@@ -433,24 +510,34 @@ angular.module('microwave.controllers', ['ionic', 'microwave.services'])
 
       $scope.playersList = playerLIst;
 
-      $ionicPopup.show({
-        template: '<div class="list"><label class="item item-input item-select"><div class="input-label">Player</div><select name="player" ng-model="playerOption.player" ng-options="o as o for o in playersList"></select></label></div>',
-        title: 'Select Player',
-        scope: $scope,
-        buttons: [
-          { text: 'Cancel' },
-          {
-            text: '<b>Select</b>',
-            type: 'button-assertive',
-            onTap: function(event) {
+      // Calls the translation service before initializing the player modal.
+      $translate(['REMOTE.playerModal.playerModalTitle', 'REMOTE.playerModal.playerModalDropdown', 'REMOTE.playerModal.playerModalCancel', 'REMOTE.playerModal.playerModalSelect']).then(function(translations) {
 
-              var selectedPlayer = $scope.playerOption.player || '';
-              
-              Popcorn.setPlayer(selectedPlayer);
+        $scope.translations = translations;
 
-            }
-          },
-        ]
+        $ionicPopup.show({
+          template: '<div class="list"><label class="item item-input item-select"><div class="input-label">'+ $scope.translations['REMOTE.playerModal.playerModalDropdown'] +'</div><select name="player" ng-model="playerOption.player" ng-options="o as o for o in playersList"></select></label></div>',
+          title: $scope.translations['REMOTE.playerModal.playerModalTitle'],
+          scope: $scope,
+          buttons: [
+            { 
+              text: $scope.translations['REMOTE.playerModal.playerModalCancel'],
+              type: 'button-small'
+            },
+            {
+              text: '<b>'+ $scope.translations['REMOTE.playerModal.playerModalSelect'] +'</b>',
+              type: 'button-assertive button-small',
+              onTap: function(event) {
+
+                var selectedPlayer = $scope.playerOption.player || '';
+                
+                Popcorn.setPlayer(selectedPlayer);
+
+              }
+            },
+          ]
+        });
+
       });
 
     });
@@ -465,35 +552,42 @@ angular.module('microwave.controllers', ['ionic', 'microwave.services'])
   $scope.searchString = {};
   $scope.showSearchForm = function() {
 
-    var searchModal = $ionicPopup.show({
-      template: '<label class="item item-input"><input type="text" ng-model="searchString.term"></label>',
-      title: 'Search',
-      scope: $scope,
-      buttons: [
-        { 
-          text: 'Cancel',
-          type: 'button-small' 
-        },
-        { 
-          text: 'Clear', 
-          type: 'button-energized button-small',
-          onTap: function(event) {
+    // Calls the translation service before initializing the search modal.
+    $translate(['REMOTE.searchModal.searchModalTitle', 'REMOTE.searchModal.searchModalCancel', 'REMOTE.searchModal.searchModalClear', 'REMOTE.searchModal.searchModalGo']).then(function(translations) {
 
-            $scope.searchString.term = '';
-            Popcorn.clearSearch();
+      $scope.translations = translations;
 
-          }
-        },
-        {
-          text: 'GO',
-          type: 'button-assertive button-small',
-          onTap: function(event) {
+      var searchModal = $ionicPopup.show({
+        template: '<label class="item item-input"><input type="text" ng-model="searchString.term"></label>',
+        title: $scope.translations['REMOTE.searchModal.searchModalTitle'],
+        scope: $scope,
+        buttons: [
+          { 
+            text: $scope.translations['REMOTE.searchModal.searchModalCancel'],
+            type: 'button-small' 
+          },
+          { 
+            text: $scope.translations['REMOTE.searchModal.searchModalClear'], 
+            type: 'button-energized button-small',
+            onTap: function(event) {
 
-            Popcorn.filterSearch($scope.searchString.term);
+              $scope.searchString.term = '';
+              Popcorn.clearSearch();
 
-          }
-        },
-      ]
+            }
+          },
+          {
+            text: '<b>'+ $scope.translations['REMOTE.searchModal.searchModalGo'] +'</b>',
+            type: 'button-assertive button-small',
+            onTap: function(event) {
+
+              Popcorn.filterSearch($scope.searchString.term);
+
+            }
+          },
+        ]
+      });
+
     });
 
   };

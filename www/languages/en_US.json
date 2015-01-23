@@ -1,0 +1,110 @@
+{
+  
+  "GENERAL": {
+    "backButton": "Back"
+  },
+
+  "REMOTE": {
+    "tabTitle": "Remote",
+    "buttons": {
+      "volumeButton": "Volume",
+      "seasonButton": "Season"
+    },
+    "filterModal": {
+      "filterModalTitle": "Select Genre",
+      "filterModalDropdown": "Genre",
+      "filterModalCancel": "Cancel",
+      "filterModalFilter": "Filter"
+    },
+    "sortModal": {
+      "sortModalTitle": "Sort List",
+      "sortModalDropdown": "Sort by",
+      "sortModalCancel": "Cancel",
+      "sortModalSort": "Sort"
+    },
+    "subtitlesModal": {
+      "subtitlesModalTitle": "Select Subtitles",
+      "subtitlesModalDropdown": "Language",
+      "subtitlesModalCancel": "Cancel",
+      "subtitlesModalSet": "Set"
+    },
+    "playerModal": {
+      "playerModalTitle": "Select Player",
+      "playerModalDropdown": "Player",
+      "playerModalCancel": "Cancel",
+      "playerModalSelect": "Select"
+    },
+    "searchModal": {
+      "searchModalTitle": "Search",
+      "searchModalCancel": "Cancel",
+      "searchModalClear": "Clear",
+      "searchModalGo": "Go"
+    }
+  },
+
+  "DEVICES": {
+    "tabTitle": "Devices",
+    "noDeviceMsg": "There are no devices set up.",
+    "noDeviceHint": "Go to the configuration tab and add one!"
+  },
+
+  "DEVICES_DETAILS": {
+    "tabTitle": "Edit Device",
+    "alerts": {
+      "APItestSuccess": "@:CONFIG.alerts.APItestSuccess",
+      "APItestFail": "@:CONFIG.alerts.APItestFail",
+      "APIversion": "@:CONFIG.alerts.APIversion",
+      "APIerror": "@:CONFIG.alerts.APIerror",
+      "changesSaved": "Changes Saved!"
+    },
+    "editForm": {
+      "name": "@:CONFIG.deviceForm.name",
+      "namePlaceholder": "@:CONFIG.deviceForm.namePlaceholder",
+      "ip": "@:CONFIG.deviceForm.ip",
+      "port": "@:CONFIG.deviceForm.port",
+      "username": "@:CONFIG.deviceForm.username",
+      "password": "@:CONFIG.deviceForm.password"
+    },
+    "editFormValidation": {
+      "required": "@:CONFIG.editFormValidation.required",
+      "format": "@:CONFIG.editFormValidation.format"
+    },
+    "deleteModal": {
+      "deleteModalTitle": "Delete Device",
+      "deleteModalText": "Are you sure you want to delete this device?",
+      "deleteModalCancel": "Cancel",
+      "deleteModalDelete": "Delete"
+    }
+  },
+
+  "CONFIG": {
+    "tabTitle": "Configuration",
+    "alerts": {
+      "languageChange": "The language was changed!",
+      "APItestSuccess": "You are connected to Popcorn Time.",
+      "APItestFail": "You are NOT connected to Popcorn Time.",
+      "APIversion": "API Version",
+      "APIerror": "API Error",
+      "changesSaved": "Device Added!"
+    },
+    "languageForm": {
+      "title": "Language",
+      "select": "Select Language",
+      "languageChangeButton": "Set Language"
+    },
+    "deviceForm": {
+      "title": "Add a Device",
+      "name": "Name",
+      "namePlaceholder": "Device Name",
+      "ip": "IP",
+      "port": "Port",
+      "username": "Username",
+      "password": "Password"
+    },
+    "editFormValidation": {
+      "required": "This is required.",
+      "format": "Incorrect format."
+    }
+  }
+
+}

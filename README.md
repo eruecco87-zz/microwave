@@ -23,6 +23,11 @@ Otherwise make sure the used ports are open on your network.
 
 ### Changelog
 
+#### 1.2.0 (1-23-2015)
+- language select (feature) *currently only in english and spanish*.
+- small code refactoring overall. 
+
 #### 1.1.0 (1-22-2015)
 - add and manage multiple devices (feature).
-- small code refactoring on angular services and controllers.  
+- small code refactoring on angular services and controllers.
+

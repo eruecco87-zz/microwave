@@ -5,9 +5,9 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('microwave', ['ionic', 'microwave.controllers', 'microwave.services'])
+angular.module('microwave', ['ionic', 'pascalprecht.translate', 'microwave.controllers', 'microwave.services'])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform, $translate) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -21,7 +21,7 @@ angular.module('microwave', ['ionic', 'microwave.controllers', 'microwave.servic
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider, $translateProvider) {
 
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
@@ -33,7 +33,17 @@ angular.module('microwave', ['ionic', 'microwave.controllers', 'microwave.servic
     .state('tab', {
       url: "/tab",
       abstract: true,
-      templateUrl: "templates/tabs.html"
+      templateUrl: "templates/tabs.html",
+      resolve: {
+        
+        // Gets the current language from localhost.
+        getLanguage: ['$window', '$translate', function($window, $translate) {
+
+          // Translates the app to the selected language on initialization.
+          $translate.use($window.localStorage.getItem('microwave-language'));
+
+        }]
+      }
     })
 
     // Each tab has its own nav history stack:
@@ -80,5 +90,10 @@ angular.module('microwave', ['ionic', 'microwave.controllers', 'microwave.servic
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/tab/remote');
 
-});
+  // Set up translation provider.
+  $translateProvider.useStaticFilesLoader({
+    prefix: 'languages/',
+    suffix: '.json'
+  });
 
+});

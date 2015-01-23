@@ -1,4 +1,4 @@
-<ion-view title="Remote" class="remote-control">
+<ion-view title="{{ 'REMOTE.tabTitle' | translate }}" class="remote-control">
   <ion-content>
       
     <div class="row">
@@ -76,11 +76,11 @@
     <div class="row">
 
       <div class="col col-50">
-        <button class="button button-small button-block button-royal" ng-click="seasonUp();">Season &nbsp;<i class="icon ion-arrow-up-b"></i></button>
+        <button class="button button-small button-block button-royal" ng-click="seasonUp();">{{ 'REMOTE.buttons.seasonButton' | translate }} &nbsp;<i class="icon ion-arrow-up-b"></i></button>
       </div>
 
       <div class="col col-50">
-        <button class="button button-small button-block button-royal" ng-click="seasonDown();">Season &nbsp;<i class="icon ion-arrow-down-b"></i></button>
+        <button class="button button-small button-block button-royal" ng-click="seasonDown();">{{ 'REMOTE.buttons.seasonButton' | translate }} &nbsp;<i class="icon ion-arrow-down-b"></i></button>
       </div>
 
     </div>
@@ -89,11 +89,11 @@
     <div class="row">
 
       <div class="col col-50">
-        <button class="button button-block button-calm" ng-click="volumeUp();">Volume &nbsp;<i class="icon ion-chevron-up"></i></button>
+        <button class="button button-block button-calm" ng-click="volumeUp();">{{ 'REMOTE.buttons.volumeButton' | translate }} &nbsp;<i class="icon ion-chevron-up"></i></button>
       </div>
 
       <div class="col col-50">
-        <button class="button button-block button-calm" ng-click="volumeDown();">Volume &nbsp;<i class="icon ion-chevron-down"></i></button>
+        <button class="button button-block button-calm" ng-click="volumeDown();">{{ 'REMOTE.buttons.volumeButton' | translate }} &nbsp;<i class="icon ion-chevron-down"></i></button>
       </div>
 
     </div>

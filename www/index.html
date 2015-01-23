@@ -16,6 +16,8 @@
 
     <!-- third-party modules -->
     <script src="js/modules/angular-json-rpc.min.js"></script>
+    <script src="js/modules/angular-translate.min.js"></script>
+    <script src="js/modules/angular-translate-loader-static-files.min.js"></script>
 
     <!-- your app's js -->
     <script src="js/app.js"></script>
@@ -29,7 +31,7 @@
     -->
     <ion-nav-bar class="bar-dark nav-title-slide-ios7">
       <ion-nav-back-button class="button-icon icon ion-android-arrow-back">
-        Back
+        {{ 'GENERAL.backButton' | translate }}
       </ion-nav-back-button>
     </ion-nav-bar>
     <!-- 

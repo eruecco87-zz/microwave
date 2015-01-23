@@ -1,20 +1,50 @@
-<ion-view title="Configuration">
+<ion-view title="{{ 'CONFIG.tabTitle' | translate }}">
   
   <ion-content class="padding">
 
+    <div class="alert alert-info" ng-show="languageSaved">
+      <p><strong>{{ 'CONFIG.alerts.languageChange' | translate }}</strong></p>
+    </div>
+    <!-- /.alert -->
+
+    <form name="languageForm" ng-submit="setLanguage(language)" class="language-form">
+      
+      <div class="list">
+
+        <div class="item item-divider">{{ 'CONFIG.languageForm.title' | translate }}</div>
+
+        <label class="item item-input item-select">
+          <div class="input-label">
+            {{ 'CONFIG.languageForm.select' | translate }}
+          </div>
+          <select name="language" ng-model="language" ng-options="language.name for language in languages track by language.key"></select>
+        </label>
+        <!-- /.item -->
+
+      </div>
+      <!-- /.list -->
+
+      <div class="button-bar">
+        <button type="submit" class="button button button-assertive">{{ 'CONFIG.languageForm.languageChangeButton' | translate }}</button>
+      </div>
+
+    </form>
+    <!-- /languageForm -->
+
     <div class="alert" ng-class="connected ? 'alert-success' : 'alert-warning'" ng-show="test">
-      <p><strong>You are <small ng-show="!connected">NOT</small> connected to Popcorn Time.</strong></p>
-      <p ng-show="connected"><small>API Version: {{connected.result.popcornVersion}}</small></p>
+      <p ng-show="!connected"><strong>{{ 'CONFIG.alerts.APItestFail' | translate }}</strong></p>
+      <p ng-show="connected"><strong>{{ 'CONFIG.alerts.APItestSuccess' | translate }}</strong></p>
+      <p ng-show="connected"><small>{{ 'CONFIG.alerts.APIversion' | translate }}: {{connected.result.popcornVersion}}</small></p>
     </div>
     <!-- /.alert -->
 
     <div class="alert alert-error" ng-show="error">
-      <p><small><strong>API Error:</strong> {{error.message}}</small></p>
+      <p><small><strong>{{ 'CONFIG.alerts.APIerror' | translate }}:</strong> {{error.message}}</small></p>
     </div>
     <!-- /.alert -->
 
     <div class="alert alert-info" ng-show="saved">
-      <p><strong>Device saved!</strong></p>
+      <p><strong>{{ 'CONFIG.alerts.changesSaved' | translate }}</strong></p>
     </div>
     <!-- /.alert -->
     
@@ -22,21 +52,21 @@
       
       <div class="list">
 
-        <div class="item item-divider">Add a Device</div>
+        <div class="item item-divider">{{ 'CONFIG.deviceForm.title' | translate }}</div>
 
         <label class="item item-input item-stacked-label">
-          <span class="input-label">Name 
-            <small class="assertive" ng-show="formSubmitted && deviceForm.name.$error.required">This is required.</small>
+          <span class="input-label">{{ 'CONFIG.deviceForm.name' | translate }} 
+            <small class="assertive" ng-show="deviceFormSubmitted && deviceForm.name.$error.required">{{ 'CONFIG.editFormValidation.required' | translate }}</small>
           </span>
 
-          <input type="text" placeholder="Device Name" name="name" ng-model="device.name" required>
+          <input type="text" placeholder="{{ 'CONFIG.deviceForm.namePlaceholder' | translate }}" name="name" ng-model="device.name" required>
         </label>
         <!-- /.item -->
 
         <label class="item item-input item-stacked-label">
-          <span class="input-label">IP 
-            <small class="assertive" ng-show="formSubmitted && deviceForm.ip.$error.required">This is required.</small>
-            <small class="assertive" ng-show="formSubmitted && deviceForm.ip.$error.pattern">Incorrect Format.</small>
+          <span class="input-label">{{ 'CONFIG.deviceForm.ip' | translate }} 
+            <small class="assertive" ng-show="deviceFormSubmitted && deviceForm.ip.$error.required">{{ 'CONFIG.editFormValidation.required' | translate }}</small>
+            <small class="assertive" ng-show="deviceFormSubmitted && deviceForm.ip.$error.pattern">{{ 'CONFIG.editFormValidation.format' | translate }}</small>
           </span>
 
           <input type="text" placeholder="0.0.0.0" name="ip" ng-model="device.ip" ng-pattern='/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/' required>
@@ -44,9 +74,9 @@
         <!-- /.item -->
 
         <label class="item item-input item-stacked-label">
-          <span class="input-label">Port
-            <small class="assertive" ng-show="formSubmitted && deviceForm.port.$error.required">This is required.</small>
-            <small class="assertive" ng-show="formSubmitted && deviceForm.port.$error.pattern">Incorrect Format.</small>
+          <span class="input-label">{{ 'CONFIG.deviceForm.port' | translate }}
+            <small class="assertive" ng-show="deviceFormSubmitted && deviceForm.port.$error.required">{{ 'CONFIG.editFormValidation.required' | translate }}</small>
+            <small class="assertive" ng-show="deviceFormSubmitted && deviceForm.port.$error.pattern">{{ 'CONFIG.editFormValidation.format' | translate }}</small>
           </span>
 
           <input type="text" placeholder="8008" name="port" ng-model="device.port" ng-pattern="/^[0-9]{1,7}$/" required>
@@ -54,8 +84,8 @@
         <!-- /.item -->
 
         <label class="item item-input item-stacked-label">
-          <span class="input-label">Username
-            <small class="assertive" ng-show="formSubmitted && deviceForm.user.$error.required">This is required.</small>
+          <span class="input-label">{{ 'CONFIG.deviceForm.username' | translate }}
+            <small class="assertive" ng-show="deviceFormSubmitted && deviceForm.user.$error.required">{{ 'CONFIG.editFormValidation.required' | translate }}</small>
           </span>
 
           <input type="text" placeholder="popcorn" name="user" ng-model="device.user" required>
@@ -63,8 +93,8 @@
         <!-- /.item -->
 
         <label class="item item-input item-stacked-label">
-          <span class="input-label">Password
-            <small class="assertive" ng-show="formSubmitted && deviceForm.pass.$error.required">This is required.</small>
+          <span class="input-label">{{ 'CONFIG.deviceForm.password' | translate }}
+            <small class="assertive" ng-show="deviceFormSubmitted && deviceForm.pass.$error.required">{{ 'CONFIG.editFormValidation.required' | translate }}</small>
           </span>
 
           <input type="text" placeholder="popcorn" name="pass" ng-model="device.pass" required>
@@ -75,7 +105,7 @@
       <!-- /.list -->
 
       <div class="button-bar">
-        <button type="submit" class="button button button-assertive" ng-click="submitAttempt();"><i class="icon ion-android-add-circle"></i></button>
+        <button type="submit" class="button button button-assertive" ng-click="deviceSubmitAttempt();"><i class="icon ion-android-add-circle"></i></button>
         <a class="button button button-energized" ng-click="testDevice(device);"><i class="icon ion-paper-airplane"></i></a>
       </div>
 

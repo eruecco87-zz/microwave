@@ -1,9 +1,9 @@
-<ion-view title="Devices">
+<ion-view title="{{ 'DEVICES.tabTitle' | translate }}">
   
   <ion-content class="padding">
    
     <div class="alert alert-info" ng-hide="devices">
-      <p><strong>There are no devices set up.</strong> <br> <small>Go to the configuration tab and add one!</small></p>
+      <p><strong>{{ 'DEVICES.noDeviceMsg' | translate }}</strong> <br> <small>{{ 'DEVICES.noDeviceHint' | translate }}</small></p>
     </div>
     <!-- /.alert -->
 
@@ -12,7 +12,7 @@
       <div class="list card" ng-repeat="device in devices">
         
         <a class="item item-avatar" href="#/tab/devices/{{$index}}" ng-class="device.active ? 'active-device' : false">
-          <img src="../img/device.png">
+          <img src="img/device.png">
           <span class="device-title">{{device.name}}</span>
           <span class="device-ip">{{device.ip}}</span>
         </a>
@@ -21,11 +21,6 @@
       
     </div>
     <!-- /.device-list -->
-
-
-    <!-- <a class="item item-icon-left assertive" ng-click="remove($index);">
-      <i class="icon ion-ios-circle-outline"></i>Start listening
-    </a> -->
 
   </ion-content>
 

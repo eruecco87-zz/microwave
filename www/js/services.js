@@ -8,6 +8,30 @@ angular.module('microwave.services', ['angular-json-rpc'])
 
   return {
 
+    // Returns an array of available languages.
+    listLanguages: function() {
+
+      return [
+        {name: 'English', key: 'en_US'},
+        {name: 'Español', key: 'es_US'}
+      ]
+
+    },
+
+    // Saves the selected language into localstorage
+    setLanguage: function(key) {
+
+      $window.localStorage.setItem('microwave-language', key);
+
+    },
+
+    // Get the current language from localstorage
+    getLanguage: function() {
+
+      return $window.localStorage.getItem('microwave-language') || 'en_US';
+
+    }
+
   }
 
 }])
