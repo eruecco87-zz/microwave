@@ -96,4 +96,6 @@ angular.module('microwave', ['ionic', 'pascalprecht.translate', 'microwave.contr
     suffix: '.json'
   });
 
+  $translateProvider.preferredLanguage('en_US');
+
 });
