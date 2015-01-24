@@ -4,7 +4,7 @@ angular.module('microwave.controllers', ['ionic', 'microwave.services'])
 /**
  * Configuration Page Controller.
  */
-.controller('ConfigCtrl', ['$timeout', '$scope', '$location', '$translate', 'Config', 'Devices', 'Popcorn', function($timeout, $scope, $location, $translate, Config, Devices, Popcorn) {
+.controller('ConfigCtrl', ['$timeout', '$scope', '$location', '$cordovaBarcodeScanner', '$translate', 'Config', 'Devices', 'Popcorn', function($timeout, $scope, $location, $cordovaBarcodeScanner, $translate, Config, Devices, Popcorn) {
 
   // Get a list of all available languages.
   $scope.languages = Config.listLanguages();
@@ -87,6 +87,33 @@ angular.module('microwave.controllers', ['ionic', 'microwave.services'])
       }
 
     });
+
+  }
+
+  $scope.readQR = function() {
+
+     $cordovaBarcodeScanner.scan().then(function(QR) {
+
+        var deviceData = JSON.parse(QR.text);
+
+        // Calls the translation service before assigning the read data.
+        $translate(['CONFIG.scannedDeviceName']).then(function(translations) {
+
+          $scope.device = {
+            name: translations['CONFIG.scannedDeviceName'],
+            ip: deviceData.ip,
+            port: deviceData.port,
+            user: deviceData.user,
+            pass: deviceData.pass
+          };
+
+        });
+
+      }, function(error) {
+
+        console.log("An error happened -> " + error);
+
+      });
 
   }
 
@@ -253,10 +280,6 @@ angular.module('microwave.controllers', ['ionic', 'microwave.services'])
     Popcorn.right();
   };
 
-  $scope.doww = function() {
-    Popcorn.down();
-  };
-
   $scope.enter = function() {
     Popcorn.enter();
   };
@@ -398,6 +421,19 @@ angular.module('microwave.controllers', ['ionic', 'microwave.services'])
 
   };
 
+  $scope.subtitleOffsetLess = function() {
+
+    Popcorn.subtitleOffset(0.5);
+
+  };
+
+  $scope.subtitleOffsetMore = function() {
+
+
+    Popcorn.subtitleOffset(-0.5);
+
+  };
+
   $scope.play = function() {
     
     Popcorn.getPlaying().then(function(response) {
@@ -416,8 +452,6 @@ angular.module('microwave.controllers', ['ionic', 'microwave.services'])
     
     Popcorn.getPlaying().then(function(response) {
       
-      console.log(response);
-
       if ( response.result.playing === true ) {
 
         Popcorn.togglePlaying();

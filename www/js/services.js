@@ -401,6 +401,13 @@ angular.module('microwave.services', ['angular-json-rpc'])
 
     },
 
+    subtitleOffset: function(offset) {
+
+      jsonRPC('subtitleoffset', [offset]);
+      return deferred.promise;
+
+    },
+
     getPlaying: function() {
 
       jsonRPC('getplaying', []);

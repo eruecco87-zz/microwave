@@ -23,6 +23,12 @@ Otherwise make sure the used ports are open on your network.
 
 ### Changelog
 
+#### 1.3.0 (1-24-2015)
+- QR Code scanning (feature).
+- Subtitle offset buttons (feature)
+- Fixed typos on spanish translation.
+- minor code refactoring. 
+
 #### 1.2.0 (1-23-2015)
 - language select (feature) *currently only in english and spanish*.
 - small code refactoring overall. 

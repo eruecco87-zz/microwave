@@ -8,7 +8,8 @@
     "tabTitle": "Control",
     "buttons": {
       "volumeButton": "Volumen",
-      "seasonButton": "Temporada"
+      "seasonButton": "Temporada",
+      "subtitleOffsetButton": "Desfase de Subs"
     },
     "filterModal": {
       "filterModalTitle": "Seleccionar Género",
@@ -65,6 +66,12 @@
       "username": "@:CONFIG.deviceForm.username",
       "password": "@:CONFIG.deviceForm.password"
     },
+    "editFormButtons": {
+      "saveButton": "Guardar",
+      "useButton": "Usar",
+      "testButton": "Probar",
+      "deleteButton": "Borrar"
+    },
     "editFormValidation": {
       "required": "@:CONFIG.editFormValidation.required",
       "format": "@:CONFIG.editFormValidation.format"
@@ -89,7 +96,7 @@
     },
     "languageForm": {
       "title": "Lenguaje",
-      "select": "Selccionar Lenguaje",
+      "select": "Seleccionar Lenguaje",
       "languageChangeButton": "Cambiar Lenguaje"
     },
     "deviceForm": {
@@ -101,10 +108,16 @@
       "username": "Usuario",
       "password": "Contraseña"
     },
+    "deviceFormButtons": {
+      "addButton": "Agregar",
+      "testButton": "Probar",
+      "qrButton": "Leer QR"
+    },
     "editFormValidation": {
       "required": "Campo requerido.",
       "format": "Formato incorrecto."
-    }
+    },
+    "scannedDeviceName": "Dispositivo Leído"
   }
 
 }

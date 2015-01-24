@@ -74,10 +74,10 @@
       <!-- /.list -->
 
       <div class="button-bar">
-        <button type="submit" class="button button button-balanced" ng-click="submitAttempt();"><i class="icon ion-edit"></i></button>
-        <a class="button button button-energized" ng-click="testDevice(device);"><i class="icon ion-paper-airplane"></i></a>
-        <a class="button button button-royal" ng-click="setActive();"><i class="icon ion-checkmark-circled"></i></a>
-        <a class="button button button-assertive" ng-click="remove();"><i class="icon ion-close-circled"></i></a>
+        <button type="submit" class="button button-small button-balanced" ng-click="submitAttempt();">{{ 'DEVICES_DETAILS.editFormButtons.saveButton' | translate }}</button>
+        <a class="button button-small button-royal" ng-click="setActive();">{{ 'DEVICES_DETAILS.editFormButtons.useButton' | translate }}</a>
+        <a class="button button-small button-energized" ng-click="testDevice(device);">{{ 'DEVICES_DETAILS.editFormButtons.testButton' | translate }}</a>
+        <a class="button button-small button-assertive" ng-click="remove();">{{ 'DEVICES_DETAILS.editFormButtons.deleteButton' | translate }}</a>
       </div>
 
     </form>

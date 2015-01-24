@@ -25,7 +25,7 @@
       <!-- /.list -->
 
       <div class="button-bar">
-        <button type="submit" class="button button button-assertive">{{ 'CONFIG.languageForm.languageChangeButton' | translate }}</button>
+        <button type="submit" class="button button-small button-assertive">{{ 'CONFIG.languageForm.languageChangeButton' | translate }}</button>
       </div>
 
     </form>
@@ -105,8 +105,9 @@
       <!-- /.list -->
 
       <div class="button-bar">
-        <button type="submit" class="button button button-assertive" ng-click="deviceSubmitAttempt();"><i class="icon ion-android-add-circle"></i></button>
-        <a class="button button button-energized" ng-click="testDevice(device);"><i class="icon ion-paper-airplane"></i></a>
+        <button type="submit" class="button button-small button-assertive" ng-click="deviceSubmitAttempt();">{{ 'CONFIG.deviceFormButtons.addButton' | translate }}</button>
+        <a class="button button-small button-energized" ng-click="testDevice(device);">{{ 'CONFIG.deviceFormButtons.testButton' | translate }}</a>
+        <a class="button button-small button-royal" ng-click="readQR();">{{ 'CONFIG.deviceFormButtons.qrButton' | translate }}</a>
       </div>
 
     </form>
