@@ -15,6 +15,12 @@
       "seasonButton": "Temporada",
       "subtitleOffsetButton": "Desfase de Subs"
     },
+    "noDeviceModal": {
+      "noDeviceModalTitle": "Sin Dispositivos",
+      "noDeviceModalText": "No has agregado un dispositivo aún.",
+      "noDeviceModalDismiss": "Cerrar",
+      "noDeviceModalAdd": "Agregar Dispositivo"
+    },
     "pingModal": {
       "pingModalTitle": "Error de conexión",
       "pingModalText": "El dispositivo seleccionado no se ha podido conectar a Popcorn Time.",

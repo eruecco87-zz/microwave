@@ -15,6 +15,12 @@
       "seasonButton": "Season",
       "subtitleOffsetButton": "Subtitle Offset"
     },
+    "noDeviceModal": {
+      "noDeviceModalTitle": "No Devices Found",
+      "noDeviceModalText": "You have not setup any devices yet.",
+      "noDeviceModalDismiss": "Dismiss",
+      "noDeviceModalAdd": "Add Device"
+    },
     "pingModal": {
       "pingModalTitle": "Connection Error",
       "pingModalText": "The selected device was not able to connect to Popcorn Time.",

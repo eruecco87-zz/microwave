@@ -347,6 +347,38 @@ angular.module('microwave.controllers', ['ionic', 'microwave.services'])
 
   }
 
+  if ( !devicesList || devicesList.length === 0 ) {
+
+    // Calls the translation service before initializing the No Device Added Modal.
+    $translate(['REMOTE.noDeviceModal.noDeviceModalTitle', 'REMOTE.noDeviceModal.noDeviceModalText', 'REMOTE.noDeviceModal.noDeviceModalDismiss', 'REMOTE.noDeviceModal.noDeviceModalAdd']).then(function(translations) {
+
+      $scope.translations = translations;
+
+      // Show a message when there are no devices Added.
+      $ionicPopup.show({
+        template: '<p>'+ $scope.translations['REMOTE.noDeviceModal.noDeviceModalText'] +'</p>',
+        title: $scope.translations['REMOTE.noDeviceModal.noDeviceModalTitle'],
+        scope: $scope,
+        buttons: [
+          { 
+            text: $scope.translations['REMOTE.noDeviceModal.noDeviceModalDismiss'],
+            type: 'button-small'
+          },
+          {
+            text: '<b>'+ $scope.translations['REMOTE.noDeviceModal.noDeviceModalAdd'] +'</b>',
+            type: 'button-assertive button-small',
+            onTap: function(event) {
+
+              $location.path('/tab/config');
+
+            }
+          },
+        ]
+      });
+
+    });
+
+  }
 
   // Popcorn Service Calls
   $scope.toggleTab = function() {
