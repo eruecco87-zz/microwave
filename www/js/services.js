@@ -161,7 +161,8 @@ angular.module('microwave.services', ['angular-json-rpc'])
       return JSON.parse($window.localStorage.getItem('microwave-devices'))
 
     },
-
+  
+    // Sets the selected device as active.
     setActive:  function(index) {
 
       // Stores localstorage config in an variable.
@@ -189,6 +190,7 @@ angular.module('microwave.services', ['angular-json-rpc'])
 
     },
 
+    // Return the currently active device.
     getActive: function() {
 
       var activeDevice;
@@ -217,6 +219,36 @@ angular.module('microwave.services', ['angular-json-rpc'])
       return activeDevice;
 
 
+    },
+
+    // Returns the index of the active device inside the devices array from localhost.
+    getActiveIndex: function() {
+
+      var activeIndex;
+
+      // Stores localstorage config in an variable.
+      var configArray = $window.localStorage.getItem('microwave-devices');
+
+      // Converts JSON string back to object.
+      if (configArray.length > 0) {
+
+        configArray = JSON.parse(configArray);
+
+      }
+
+      // Runs through all devices and stores the active device.
+      angular.forEach(configArray, function(value, key) {
+
+        if ( configArray[key].active === true ) {
+
+          activeIndex =  key;
+
+        }
+
+      });
+
+      return activeIndex;
+
     }
 
   }
@@ -227,7 +259,7 @@ angular.module('microwave.services', ['angular-json-rpc'])
 /**
  * Popcorn Time API Wrapper.
  */
-.factory('Popcorn', ['Devices', '$http', '$q', function(Devices, $http, $q) {
+.factory('Popcorn', ['Devices', '$timeout', '$http', '$q', function(Devices, $timeout, $http, $q) {
 
   // Global deferred object to return API responses.
   var deferred;
@@ -239,11 +271,27 @@ angular.module('microwave.services', ['angular-json-rpc'])
     deferred = $q.defer();
 
     // Sets the config for API calls.
-    var apiConfig = configTest || Devices.getActive(),
-        ipAddress = apiConfig.ip,
-        portNumber = apiConfig.port,
-        username = apiConfig.user,
-        password = apiConfig.pass;
+    var apiConfig = configTest || Devices.getActive();
+    
+    if ( apiConfig ) {
+
+      var ipAddress = apiConfig.ip,
+          portNumber = apiConfig.port,
+          username = apiConfig.user,
+          password = apiConfig.pass;
+
+    }
+
+    // Set a 6 second max timeout for a ping to resolve.
+    if (method === 'ping') {
+      
+      $timeout(function() {
+
+        deferred.resolve(false);
+
+      }, 6000);
+
+    }
 
     // Sets the API url and authorization based on the config.
     var apiUrl = 'http://' + ipAddress + ':' + portNumber;

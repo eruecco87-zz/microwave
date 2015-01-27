@@ -4,7 +4,99 @@ angular.module('microwave.controllers', ['ionic', 'microwave.services'])
 /**
  * Configuration Page Controller.
  */
-.controller('ConfigCtrl', ['$timeout', '$scope', '$location', '$cordovaBarcodeScanner', '$translate', 'Config', 'Devices', 'Popcorn', function($timeout, $scope, $location, $cordovaBarcodeScanner, $translate, Config, Devices, Popcorn) {
+.controller('ConfigCtrl', ['$timeout', '$scope', '$location', '$ionicScrollDelegate', '$cordovaBarcodeScanner', '$translate', 'Config', 'Devices', 'Popcorn', function($timeout, $scope, $location, $ionicScrollDelegate, $cordovaBarcodeScanner, $translate, Config, Devices, Popcorn) { 
+
+  // Check for device form submit to validate data.
+  $scope.deviceSubmitAttempt = function() {
+
+    $scope.deviceFormSubmitted = true;
+
+  }
+
+  // Saves the device form data.
+  $scope.saveDevice = function(device) {
+
+    // Sets the new device as active by default.
+    device.active = true;
+
+    // Saves the device.
+    Devices.save(device);
+
+    $scope.test = false; // Hides test information.
+    $scope.saved = true; // Shows success message.
+    $ionicScrollDelegate.anchorScroll('device-notifications');
+
+    $timeout(function() {
+
+      // Redirects to the devices tab.
+      $location.path('/tab/devices');
+      $scope.saved = false; 
+
+    }, 1000);
+
+  }
+
+  // Pings the API to check for connection.
+  $scope.testDevice = function(device) {
+
+    $scope.test = true; // Displays test status.
+    $ionicScrollDelegate.anchorScroll('device-notifications');
+
+    // Hides test status after 3 seconds.
+    $timeout(function() {
+
+      $scope.test = false; // Hides test information.
+
+    }, 2000);
+
+    if (device) {
+
+      Popcorn.ping(device).then(function(ping) {
+
+        if ( ping.error ) {
+
+          $scope.error = ping.error; // Displays test error.
+          $scope.test = false // Hides test information.
+
+        } else {
+
+          $scope.connected = ping; // Displays test information.
+          $scope.error = false; // Removes test error if any.
+
+        }
+
+      });
+
+    }
+
+  }
+
+  $scope.readQR = function() {
+
+     $cordovaBarcodeScanner.scan().then(function(QR) {
+
+        var deviceData = JSON.parse(QR.text);
+
+        // Calls the translation service before assigning the read data.
+        $translate(['CONFIG.scannedDeviceName']).then(function(translations) {
+
+          $scope.device = {
+            name: translations['CONFIG.scannedDeviceName'],
+            ip: deviceData.ip,
+            port: deviceData.port,
+            user: deviceData.user,
+            pass: deviceData.pass
+          };
+
+        });
+
+      }, function(error) {
+
+        console.log("An error happened -> " + error);
+
+      });
+
+  }
 
   // Get a list of all available languages.
   $scope.languages = Config.listLanguages();
@@ -35,85 +127,6 @@ angular.module('microwave.controllers', ['ionic', 'microwave.services'])
       $scope.languageSaved = false; // Hides success message.
 
     }, 1000);
-
-  } 
-
-  // Check for device form submit to validate data.
-  $scope.deviceSubmitAttempt = function() {
-
-    $scope.deviceFormSubmitted = true;
-
-  }
-
-  // Saves the device form data.
-  $scope.saveDevice = function(device) {
-
-    // Sets the new device as active by default.
-    device.active = true;
-
-    // Saves the device.
-    Devices.save(device);
-
-    $scope.test = false; // Hides test information.
-    $scope.saved = true; // Shows success message.
-
-    $timeout(function() {
-
-      // Redirects to the devices tab.
-      $location.path('/tab/devices');
-      $scope.saved = false; 
-
-    }, 1000);
-
-  }
-
-  // Pings the API to check for connection.
-  $scope.testDevice = function(device) {
-
-    $scope.test = true; // Displays test status.
-
-    Popcorn.ping(device).then(function(ping) {
-
-      if ( ping.error ) {
-
-        $scope.error = ping.error; // Displays test error.
-        $scope.test = false // Hides test information.
-
-      } else {
-
-        $scope.connected = ping; // Displays test information.
-        $scope.error = false; // Removes test error if any.
-
-      }
-
-    });
-
-  }
-
-  $scope.readQR = function() {
-
-     $cordovaBarcodeScanner.scan().then(function(QR) {
-
-        var deviceData = JSON.parse(QR.text);
-
-        // Calls the translation service before assigning the read data.
-        $translate(['CONFIG.scannedDeviceName']).then(function(translations) {
-
-          $scope.device = {
-            name: translations['CONFIG.scannedDeviceName'],
-            ip: deviceData.ip,
-            port: deviceData.port,
-            user: deviceData.user,
-            pass: deviceData.pass
-          };
-
-        });
-
-      }, function(error) {
-
-        console.log("An error happened -> " + error);
-
-      });
 
   }
 
@@ -169,6 +182,13 @@ angular.module('microwave.controllers', ['ionic', 'microwave.services'])
 
     $scope.test = true; // Displays test status.
 
+    // Hides test status after 3 seconds.
+    $timeout(function() {
+
+      $scope.test = false; // Hides test information.
+
+    }, 2000);
+
     Popcorn.ping(config).then(function(ping) {
 
       if ( ping.error ) {
@@ -187,6 +207,7 @@ angular.module('microwave.controllers', ['ionic', 'microwave.services'])
 
   }
 
+  // Sets the device being edited as active.
   $scope.setActive = function() {
 
     // Sets the selected item as active;
@@ -245,7 +266,87 @@ angular.module('microwave.controllers', ['ionic', 'microwave.services'])
 /**
  * Remote Control Controller.
  */
-.controller('RemoteCtrl', ['$scope', '$translate', '$ionicPopup', 'Popcorn', function($scope, $translate, $ionicPopup, Popcorn) {
+.controller('RemoteCtrl', ['$scope', '$location', '$translate', '$ionicLoading', '$ionicPopup', 'Devices', 'Popcorn', function($scope, $location, $translate, $ionicLoading, $ionicPopup, Devices, Popcorn) {
+
+  // Get all stored devices.
+  var devicesList = Devices.list();
+
+  // If there are devices stored try to ping the active device on load.
+  if ( devicesList && devicesList.length > 0 ) {
+
+    // Shows a connecting message while the API is being pinged to check for conenction.
+    $translate(['REMOTE.messages.connectingMessage']).then(function(translations) {
+
+      $scope.translations = translations;
+
+      // Show a Connecting Message.
+      $ionicLoading.show({
+        template: $scope.translations['REMOTE.messages.connectingMessage'],
+        duration: false
+      });
+
+    });
+
+    // Ping the api when the remote tab is opened to check for connection.
+    Popcorn.ping().then(function(ping) {
+
+      // When the API was succesfuly reached.
+      if ( ping.result ) {
+
+        $ionicLoading.hide();
+
+        // Calls the translation service before initializing the Connected Message.
+        $translate(['REMOTE.messages.connectedMessage']).then(function(translations) {
+
+          $scope.translations = translations;
+
+          // Show a Connected Message and dismiss the message after 1 second.
+          $ionicLoading.show({
+            template: $scope.translations['REMOTE.messages.connectedMessage'],
+            duration: 1000
+          });
+
+        });
+
+      } else {
+
+        $ionicLoading.hide();
+        
+        // Calls the translation service before initializing the Failed Connection Modal.
+        $translate(['REMOTE.pingModal.pingModalTitle', 'REMOTE.pingModal.pingModalText', 'REMOTE.pingModal.pingModalDismiss', 'REMOTE.pingModal.pingModalDevices']).then(function(translations) {
+
+          $scope.translations = translations;
+
+          // Show a message when the API cannot be reached.
+          $ionicPopup.show({
+            template: '<p>'+ $scope.translations['REMOTE.pingModal.pingModalText'] +'</p>',
+            title: $scope.translations['REMOTE.pingModal.pingModalTitle'],
+            scope: $scope,
+            buttons: [
+              { 
+                text: $scope.translations['REMOTE.pingModal.pingModalDismiss'],
+                type: 'button-small'
+              },
+              {
+                text: '<b>'+ $scope.translations['REMOTE.pingModal.pingModalDevices'] +'</b>',
+                type: 'button-assertive button-small',
+                onTap: function(event) {
+
+                  $location.path('/tab/devices');
+
+                }
+              },
+            ]
+          });
+
+        });
+
+      }
+
+    });
+
+  }
+
 
   // Popcorn Service Calls
   $scope.toggleTab = function() {

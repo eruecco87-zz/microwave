@@ -2,53 +2,29 @@
   
   <ion-content class="padding">
 
-    <div class="alert alert-info" ng-show="languageSaved">
-      <p><strong>{{ 'CONFIG.alerts.languageChange' | translate }}</strong></p>
-    </div>
-    <!-- /.alert -->
-
-    <form name="languageForm" ng-submit="setLanguage(language)" class="language-form">
+    <div id="device-notifications">
       
-      <div class="list">
-
-        <div class="item item-divider">{{ 'CONFIG.languageForm.title' | translate }}</div>
-
-        <label class="item item-input item-select">
-          <div class="input-label">
-            {{ 'CONFIG.languageForm.select' | translate }}
-          </div>
-          <select name="language" ng-model="language" ng-options="language.name for language in languages track by language.key"></select>
-        </label>
-        <!-- /.item -->
-
+      <div class="alert" ng-class="connected ? 'alert-success' : 'alert-warning'" ng-show="test">
+        <p ng-show="!connected"><strong>{{ 'CONFIG.alerts.APItestFail' | translate }}</strong></p>
+        <p ng-show="connected"><strong>{{ 'CONFIG.alerts.APItestSuccess' | translate }}</strong></p>
+        <p ng-show="connected"><small>{{ 'CONFIG.alerts.APIversion' | translate }}: {{connected.result.popcornVersion}}</small></p>
       </div>
-      <!-- /.list -->
+      <!-- /.alert -->
 
-      <div class="button-bar">
-        <button type="submit" class="button button-small button-assertive">{{ 'CONFIG.languageForm.languageChangeButton' | translate }}</button>
+      <div class="alert alert-error" ng-show="error">
+        <p><small><strong>{{ 'CONFIG.alerts.APIerror' | translate }}:</strong> {{error.message}}</small></p>
       </div>
+      <!-- /.alert -->
 
-    </form>
-    <!-- /languageForm -->
+      <div class="alert alert-info" ng-show="saved">
+        <p><strong>{{ 'CONFIG.alerts.changesSaved' | translate }}</strong></p>
+      </div>
+      <!-- /.alert -->
 
-    <div class="alert" ng-class="connected ? 'alert-success' : 'alert-warning'" ng-show="test">
-      <p ng-show="!connected"><strong>{{ 'CONFIG.alerts.APItestFail' | translate }}</strong></p>
-      <p ng-show="connected"><strong>{{ 'CONFIG.alerts.APItestSuccess' | translate }}</strong></p>
-      <p ng-show="connected"><small>{{ 'CONFIG.alerts.APIversion' | translate }}: {{connected.result.popcornVersion}}</small></p>
     </div>
-    <!-- /.alert -->
-
-    <div class="alert alert-error" ng-show="error">
-      <p><small><strong>{{ 'CONFIG.alerts.APIerror' | translate }}:</strong> {{error.message}}</small></p>
-    </div>
-    <!-- /.alert -->
-
-    <div class="alert alert-info" ng-show="saved">
-      <p><strong>{{ 'CONFIG.alerts.changesSaved' | translate }}</strong></p>
-    </div>
-    <!-- /.alert -->
+    <!-- /#device-notifications -->
     
-    <form name="deviceForm" ng-submit="deviceForm.$valid && saveDevice(device)" novalidate>
+    <form name="deviceForm" ng-submit="deviceForm.$valid && saveDevice(device)" novalidate class="config-form">
       
       <div class="list">
 
@@ -112,6 +88,40 @@
 
     </form>
     <!-- /deviceForm -->
+
+    <div id="language-notifications">
+
+      <div class="alert alert-info" ng-show="languageSaved">
+        <p><strong>{{ 'CONFIG.alerts.languageChange' | translate }}</strong></p>
+      </div>
+      <!-- /.alert -->
+
+    </div>
+    <!-- #language-notifications -->
+
+    <form name="languageForm" ng-submit="setLanguage(language)" class="config-form">
+      
+      <div class="list">
+
+        <div class="item item-divider">{{ 'CONFIG.languageForm.title' | translate }}</div>
+
+        <label class="item item-input item-select">
+          <div class="input-label">
+            {{ 'CONFIG.languageForm.select' | translate }}
+          </div>
+          <select name="language" ng-model="language" ng-options="language.name for language in languages track by language.key"></select>
+        </label>
+        <!-- /.item -->
+
+      </div>
+      <!-- /.list -->
+
+      <div class="button-bar">
+        <button type="submit" class="button button-small button-assertive">{{ 'CONFIG.languageForm.languageChangeButton' | translate }}</button>
+      </div>
+
+    </form>
+    <!-- /languageForm -->
 
   </ion-content>
 

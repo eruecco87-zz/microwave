@@ -10066,6 +10066,9 @@ $ios-transition-box-shadow-end: -200px 0px 200px rgba(0,0,0,0.15), -5px 0px 5px 
     background: #43cee6; }
   .alert p {
     margin: 0; }
+  .alert > a {
+    color: #fff;
+    text-decoration: none; }
 
 .remote-control .row {
   margin: 0 0 -25px; }
@@ -10082,5 +10085,5 @@ $ios-transition-box-shadow-end: -200px 0px 200px rgba(0,0,0,0.15), -5px 0px 5px 
   .device-list .active-device span {
     color: #fff; }
 
-.language-form {
+.config-form {
   margin-bottom: 20px; }

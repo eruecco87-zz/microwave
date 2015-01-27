@@ -6,10 +6,20 @@
 
   "REMOTE": {
     "tabTitle": "Control",
+    "messages": {
+      "connectingMessage": "Conectando...",
+      "connectedMessage": "Dispositivo Conectado!"
+    },
     "buttons": {
       "volumeButton": "Volumen",
       "seasonButton": "Temporada",
       "subtitleOffsetButton": "Desfase de Subs"
+    },
+    "pingModal": {
+      "pingModalTitle": "Error de conexión",
+      "pingModalText": "El dispositivo seleccionado no se ha podido conectar a Popcorn Time.",
+      "pingModalDismiss": "Cerrar",
+      "pingModalDevices": "Ver Dispositivos"
     },
     "filterModal": {
       "filterModalTitle": "Seleccionar Género",

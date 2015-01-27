@@ -6,10 +6,20 @@
 
   "REMOTE": {
     "tabTitle": "Remote",
+    "messages": {
+      "connectingMessage": "Connecting...",
+      "connectedMessage": "Device Connected!"
+    },
     "buttons": {
       "volumeButton": "Volume",
       "seasonButton": "Season",
       "subtitleOffsetButton": "Subtitle Offset"
+    },
+    "pingModal": {
+      "pingModalTitle": "Connection Error",
+      "pingModalText": "The selected device was not able to connect to Popcorn Time.",
+      "pingModalDismiss": "Dismiss",
+      "pingModalDevices": "Manage Devices"
     },
     "filterModal": {
       "filterModalTitle": "Select Genre",

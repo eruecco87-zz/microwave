@@ -23,9 +23,15 @@ Otherwise make sure the used ports are open on your network.
 
 ### Changelog
 
+#### 1.4.0 (1-26-2015)
+- Connection checking on Remote Tab (feature).
+- Moved language changer to the bottom on Configuration tab.
+- New app icon.
+- Small code refactoring.
+
 #### 1.3.0 (1-24-2015)
 - QR Code scanning (feature).
-- Subtitle offset buttons (feature)
+- Subtitle offset buttons (feature).
 - Fixed typos on spanish translation.
 - minor code refactoring. 
 
