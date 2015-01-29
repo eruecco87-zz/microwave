@@ -10089,3 +10089,6 @@ $ios-transition-box-shadow-end: -200px 0px 200px rgba(0,0,0,0.15), -5px 0px 5px 
 
 .config-form {
   margin-bottom: 20px; }
+
+.main-view {
+  background: #fff; }
