@@ -1,4 +1,4 @@
-microwave
+Microwave
 =========
 
 An Android remote control app for [Popcorn Time](https://popcorntime.io/) made with [Ionic Framework](http://ionicframework.com/)
@@ -17,11 +17,17 @@ An Android remote control app for [Popcorn Time](https://popcorntime.io/) made w
 ### Troubleshooting
 If the configuration you're entering from Popcorntime does not seem to work try changing the port number on both Popcorn Time and Microwave.
 
-Otherwise make sure the used ports are open on your network.
+Otherwise make sure the used ports are open on your network and that the ip that displays in Popcorn Time is the correct ip for your computer in the network.
 
 ---
 
 ### Changelog
+
+#### 1.5.0 (1-29-2015)
+- Swipe left and right gestures to switch between tabs.
+- Fixes bug that prevented a notification from being translated on first run.
+- Reduced remote control button spacing to prevent some scrolling.
+- Small code refactoring.
 
 #### 1.4.0 (1-26-2015)
 - Connection checking on Remote Tab (feature).

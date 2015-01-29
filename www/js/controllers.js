@@ -266,7 +266,7 @@ angular.module('microwave.controllers', ['ionic', 'microwave.services'])
 /**
  * Remote Control Controller.
  */
-.controller('RemoteCtrl', ['$scope', '$location', '$translate', '$ionicLoading', '$ionicPopup', 'Devices', 'Popcorn', function($scope, $location, $translate, $ionicLoading, $ionicPopup, Devices, Popcorn) {
+.controller('RemoteCtrl', ['$scope', '$timeout', '$location', '$translate', '$ionicLoading', '$ionicPopup', 'Devices', 'Popcorn', function($scope, $timeout, $location, $translate, $ionicLoading, $ionicPopup, Devices, Popcorn) {
 
   // Get all stored devices.
   var devicesList = Devices.list();
@@ -349,35 +349,39 @@ angular.module('microwave.controllers', ['ionic', 'microwave.services'])
 
   if ( !devicesList || devicesList.length === 0 ) {
 
-    // Calls the translation service before initializing the No Device Added Modal.
-    $translate(['REMOTE.noDeviceModal.noDeviceModalTitle', 'REMOTE.noDeviceModal.noDeviceModalText', 'REMOTE.noDeviceModal.noDeviceModalDismiss', 'REMOTE.noDeviceModal.noDeviceModalAdd']).then(function(translations) {
+    // Timeout needed for the translation service to kick in.
+    $timeout(function() {
 
-      $scope.translations = translations;
+      // Calls the translation service before initializing the No Device Added Modal.
+      $translate(['REMOTE.noDeviceModal.noDeviceModalTitle', 'REMOTE.noDeviceModal.noDeviceModalText', 'REMOTE.noDeviceModal.noDeviceModalDismiss', 'REMOTE.noDeviceModal.noDeviceModalAdd']).then(function(translations) {
 
-      // Show a message when there are no devices Added.
-      $ionicPopup.show({
-        template: '<p>'+ $scope.translations['REMOTE.noDeviceModal.noDeviceModalText'] +'</p>',
-        title: $scope.translations['REMOTE.noDeviceModal.noDeviceModalTitle'],
-        scope: $scope,
-        buttons: [
-          { 
-            text: $scope.translations['REMOTE.noDeviceModal.noDeviceModalDismiss'],
-            type: 'button-small'
-          },
-          {
-            text: '<b>'+ $scope.translations['REMOTE.noDeviceModal.noDeviceModalAdd'] +'</b>',
-            type: 'button-assertive button-small',
-            onTap: function(event) {
+        $scope.translations = translations;
 
-              $location.path('/tab/config');
+        // Show a message when there are no devices Added.
+        $ionicPopup.show({
+          template: '<p>'+ $scope.translations['REMOTE.noDeviceModal.noDeviceModalText'] +'</p>',
+          title: $scope.translations['REMOTE.noDeviceModal.noDeviceModalTitle'],
+          scope: $scope,
+          buttons: [
+            { 
+              text: $scope.translations['REMOTE.noDeviceModal.noDeviceModalDismiss'],
+              type: 'button-small'
+            },
+            {
+              text: '<b>'+ $scope.translations['REMOTE.noDeviceModal.noDeviceModalAdd'] +'</b>',
+              type: 'button-assertive button-small',
+              onTap: function(event) {
 
-            }
-          },
-        ]
+                $location.path('/tab/config');
+
+              }
+            },
+          ]
+        });
+
       });
 
-    });
-
+    }, 100);
   }
 
   // Popcorn Service Calls

@@ -10072,6 +10072,8 @@ $ios-transition-box-shadow-end: -200px 0px 200px rgba(0,0,0,0.15), -5px 0px 5px 
 
 .remote-control .row {
   margin: 0 0 -25px; }
+  .remote-control .row .button {
+    margin: 9px 0px; }
   .remote-control .row .clear-search {
     margin-top: 20px; }
 
