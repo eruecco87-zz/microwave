@@ -6,17 +6,17 @@
 <ion-tabs ion-tabs-swipe class="tabs-striped tabs-background-dark tabs-assertive slide-{{tabAnimation}}" delegate-handle="main-tabs">
 
   <!-- Remote Tab -->
-  <ion-tab title="Remote" icon="icon ion-ios-keypad" href="#/tab/remote">
+  <ion-tab title="Remote" icon="icon ion-ios-keypad" href="#/tab/remote" ng-click="tabSelect(0)">
     <ion-nav-view name="tab-remote"></ion-nav-view>
   </ion-tab>
 
   <!-- Devices Tab -->
-  <ion-tab title="Devices" icon="icon ion-ios-monitor" href="#/tab/devices">
+  <ion-tab title="Devices" icon="icon ion-ios-monitor" href="#/tab/devices" ng-click="tabSelect(1)">
     <ion-nav-view name="tab-devices"></ion-nav-view>
   </ion-tab>
 
   <!-- Config Tab -->
-  <ion-tab title="Config" icon="icon ion-gear-b" href="#/tab/config">
+  <ion-tab title="Config" icon="icon ion-gear-b" href="#/tab/config" ng-click="tabSelect(2)">
     <ion-nav-view name="tab-config"></ion-nav-view>
   </ion-tab>
 

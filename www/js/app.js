@@ -43,6 +43,7 @@ angular.module('microwave', ['ionic', 'pascalprecht.translate', 'ngCordova', 'mi
           $translate.use($window.localStorage.getItem('microwave-language'));
 
         }]
+        
       }
     })
 

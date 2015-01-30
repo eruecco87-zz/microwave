@@ -58,6 +58,27 @@ angular.module('microwave.directives', ['ionic'])
 
         }, element);
 
+        /**
+         * Handles the direction on the animation on manual tab select.
+         */
+        $scope.tabSelect = function(selectedTab) {
+
+          var currentTab = $ionicTabsDelegate.$getByHandle(attrs.delegateHandle).selectedIndex();
+
+          if ( currentTab < selectedTab ) {
+
+            $scope.tabAnimation = 'left-right';
+
+          } else if ( currentTab > selectedTab ) {
+
+            $scope.tabAnimation = 'right-left';
+
+          }
+
+          $ionicTabsDelegate.$getByHandle(attrs.delegateHandle).select(selectedTab);
+
+        }
+
 
       };
 
