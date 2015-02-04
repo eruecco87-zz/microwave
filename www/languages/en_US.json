@@ -5,7 +5,7 @@
   },
 
   "SIDE": {
-    "loading": "Loading...",
+    "loading": "Fetching Information...",
     "noActivityAlert": {
       "highlight": "Player inactive.",
       "text": "You're currently not watching anything or the player is still loading."

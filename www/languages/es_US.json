@@ -5,7 +5,7 @@
   },
 
   "SIDE": {
-    "loading": "Cargando...",
+    "loading": "Buscando Información...",
     "noActivityAlert": {
       "highlight": "Reproductor inactivo.",
       "text": "En este momento no estás viendo películas ni series o se están cargando aún."

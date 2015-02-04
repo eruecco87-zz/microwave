@@ -1317,7 +1317,7 @@ angular.module('microwave.controllers', ['ionic', 'microwave.services'])
         if ( playing && playing.result.title ) {
 
           $scope.watching = true;
-          $scope.movie = playing.result.movie; // Check if whats being played is a movie.
+          $scope.isMovie = playing.result.movie; // Check if whats being played is a movie.
 
         } else {
 
@@ -1325,24 +1325,27 @@ angular.module('microwave.controllers', ['ionic', 'microwave.services'])
 
         }
 
-        // If a movie is being played get data from OMDB.
-        if ( $scope.watching && $scope.movie ) {
+        // If a movie is being played.
+        if ( $scope.watching && $scope.isMovie ) {
 
-          $scope.anime = false;
-          $scope.show = false;
-
-          // Shows a connecting message while the API is being pinged to check for conenction.
+          // Shows a Fetching Information message while getting the information.
           $translate(['SIDE.loading']).then(function(translations) {
 
             $scope.translations = translations;
 
             $ionicLoading.show({
               template: $scope.translations['SIDE.loading'],
-              duration: 10000
+              duration: 15000
             });
 
           });
 
+          // Hides all the information cards.
+          $scope.movie = false;
+          $scope.show = false;
+          $scope.anime = false;
+
+          // Gets the OMDB information for the movie.
           OMDB.getById(playing.result.imdb_id).then(function(omdb) {
 
             $scope.id = omdb.imdbID;
@@ -1355,41 +1358,54 @@ angular.module('microwave.controllers', ['ionic', 'microwave.services'])
             $scope.director = omdb.Director;
             $scope.rating = omdb.imdbRating;
 
+            // Show the movie information card.
+            $scope.movie = true;
+
             $ionicLoading.hide();
 
           });
 
         }
 
-        // If a tv show or anime is being played get data from.
-        if ( $scope.watching && !$scope.movie ) {
+        // If a tv show or anime is being played.
+        if ( $scope.watching && !$scope.isMovie ) {
 
           // If the id is not numeric then get Anime data.
           if ( isNaN(playing.result.tvdb_id) ) {
 
-            $scope.anime = true;
+            // Hides all the information cards and show the anime information card.
+            $scope.movie = false;
             $scope.show = false;
+            $scope.anime = true;
+
             // TO-DO: Get data for anime series.
 
           } 
 
           // If the id is numeric then get TV Show data.
           else {
-            
-             // Shows a connecting message while the API is being pinged to check for conenction.
+
+            // Shows a Fetching Information message while getting the information.
             $translate(['SIDE.loading']).then(function(translations) {
 
               $scope.translations = translations;
 
               $ionicLoading.show({
                 template: $scope.translations['SIDE.loading'],
-                duration: 10000
+                duration: 15000
               });
 
             });
 
+            // Hides all the information cards.
+            $scope.movie = false;
+            $scope.show = false;
+            $scope.anime = false;
+
+            // Gets the TRAKT.TV information for the show.
             TRAKT.getById(playing.result.tvdb_id).then(function(trakt) {
 
+              // Selects the last index from the array since trakt.tv returns info for really old shows.
               var maxIndex = trakt.length -1;
                   theShow = trakt[maxIndex].show,
                   theEpisode = trakt[maxIndex].episode;
@@ -1400,12 +1416,14 @@ angular.module('microwave.controllers', ['ionic', 'microwave.services'])
               $scope.year = theShow.year;
               $scope.plot = theShow.overview;
               
+              // If information from the episode was returned by trakt.tv
               if ( theEpisode ) {
 
                 $scope.episode = theEpisode.title;
                 $scope.episodeNum = theEpisode.number;
                 $scope.seasonNum = theEpisode.season;
 
+              // Otherwise get the info directly from the Popcorn Time Player.
               } else {
 
                 $scope.episodeNum = playing.result.episode;
@@ -1413,7 +1431,7 @@ angular.module('microwave.controllers', ['ionic', 'microwave.services'])
 
               }
 
-              $scope.anime = false;
+              // Show the shows information card.
               $scope.show = true;
 
               $ionicLoading.hide();
