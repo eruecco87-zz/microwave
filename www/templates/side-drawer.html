@@ -1,0 +1,59 @@
+<ion-content class="padding" ng-controller="SideDrawerCtrl">
+
+  <div class="alert alert-info" ng-show="!watching">
+    <strong>{{ 'SIDE.noActivityAlert.highlight' | translate }}</strong> <br> <small>{{ 'SIDE.noActivityAlert.text' | translate }}</small>
+  </div>
+  <!-- /.alert -->
+
+  <div class="list card" ng-show="watching && movie">
+
+    <a class="item item-thumbnail-left" href="#" ng-click="openIMDB(id)" device-feedback>
+      <img ng-src="{{poster}}" alt="{{title}}">
+      <h3><strong>{{title}}</strong></h3>
+      <h4><strong>{{year}}</strong></h4>
+      <h4>{{runTime}}</h4>
+    </a>
+
+    <div class="item item-text-wrap">
+      <p>{{plot}}</p>
+    </div>
+
+    <div class="item">
+      <p><strong>{{ 'SIDE.movieSummary.genre' | translate }}</strong>: {{genre}}</p>
+      <p><strong>{{ 'SIDE.movieSummary.director' | translate }}</strong>: {{director}}</p>
+      <p><strong>{{ 'SIDE.movieSummary.IMDB' | translate }}</strong>: {{rating}}</p>
+    </div>
+
+  </div>
+  <!-- /.card -->
+
+  <div class="list card" ng-show="watching && show">
+    
+    <a class="item item-thumbnail-left" href="#" ng-click="openTRAKT(slug)" device-feedback>
+      <img ng-src="{{poster}}" alt="{{title}}">
+      <h3><strong>{{title}}</strong></h3>
+      <h4><strong>{{year}}</strong></h4>
+      <h4 ng-show="episode">{{episode}}</h4>
+    </a>
+
+    <div class="item item-text-wrap">
+      <p>{{plot}}</p>
+    </div>
+
+    <div class="item" ng-show="episodeNum">
+      <p><strong>{{ 'SIDE.showSummary.episode' | translate }}</strong>: {{episodeNum}}</p>
+      <p><strong>{{ 'SIDE.showSummary.season' | translate }}</strong>: {{seasonNum}}</p>
+    </div>
+
+  </div>
+  <!-- /.card -->
+
+  <div class="alert alert-warning" ng-show="watching && anime">
+    
+    <strong>{{ 'SIDE.animeSummary.notAvailable' | translate }}</strong>
+
+  </div>
+  <!-- /.alert -->
+
+</ion-content>
+<!-- /ion-content -->

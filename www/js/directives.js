@@ -77,6 +77,28 @@ angular.module('microwave.directives', ['ionic'])
 
           $ionicTabsDelegate.$getByHandle(attrs.delegateHandle).select(selectedTab);
 
+          // Emit Device Feedback if enabled.
+          window.plugins.deviceFeedback.isFeedbackEnabled(function(feedback) {
+
+            DF = window.plugins.deviceFeedback;
+
+            if( feedback.haptic && feedback.acoustic ) {
+
+              DF.haptic(DF.VIRTUAL_KEY);
+              DF.acoustic(DF.VIRTUAL_KEY);
+
+            } else if( feedback.haptic ) {
+
+              DF.haptic(DF.VIRTUAL_KEY);
+
+            } else if( feedback.acoustic ) {
+
+              DF.acoustic(DF.VIRTUAL_KEY);
+
+            }
+
+          });
+
         }
 
 
@@ -86,4 +108,44 @@ angular.module('microwave.directives', ['ionic'])
 
   };
 
-}]);
+}])
+
+/**
+ * Enables device feedback (haptic, acoustic).
+ */
+.directive('deviceFeedback', ['$rootScope', function($rootScope) {
+
+  return {
+
+    compile: function(element, attr, transclude) {
+
+      element.bind('click', function(event) {
+
+        window.plugins.deviceFeedback.isFeedbackEnabled(function(feedback) {
+
+          DF = window.plugins.deviceFeedback;
+
+          if( feedback.haptic && feedback.acoustic ) {
+
+            DF.haptic(DF.VIRTUAL_KEY);
+            DF.acoustic(DF.VIRTUAL_KEY);
+
+          } else if( feedback.haptic ) {
+
+            DF.haptic(DF.VIRTUAL_KEY);
+
+          } else if( feedback.acoustic ) {
+
+            DF.acoustic(DF.VIRTUAL_KEY);
+
+          }
+
+        });
+
+      });
+
+    } 
+
+  }
+
+}])

@@ -28,7 +28,7 @@
             <small class="assertive" ng-show="formSubmitted && deviceForm.name.$error.required">{{ 'DEVICES_DETAILS.editFormValidation.required' | translate }}</small>
           </span>
 
-          <input type="text" placeholder="{{ 'DEVICES_DETAILS.editForm.namePlaceholder' | translate }}" name="name" ng-model="device.name" required>
+          <input type="text" placeholder="{{ 'DEVICES_DETAILS.editForm.namePlaceholder' | translate }}" name="name" ng-model="device.name" required device-feedback>
         </label>
         <!-- /.item -->
 
@@ -38,7 +38,7 @@
             <small class="assertive" ng-show="formSubmitted && deviceForm.ip.$error.pattern">{{ 'DEVICES_DETAILS.editFormValidation.format' | translate }}</small>
           </span>
 
-          <input type="text" placeholder="0.0.0.0" name="ip" ng-model="device.ip" ng-pattern='/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/' required>
+          <input type="text" placeholder="0.0.0.0" name="ip" ng-model="device.ip" ng-pattern='/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/' required device-feedback>
         </label>
         <!-- /.item -->
 
@@ -48,7 +48,7 @@
             <small class="assertive" ng-show="formSubmitted && deviceForm.port.$error.pattern">{{ 'DEVICES_DETAILS.editFormValidation.format' | translate }}</small>
           </span>
 
-          <input type="text" placeholder="8008" name="port" ng-model="device.port" ng-pattern="/^[0-9]{1,7}$/" required>
+          <input type="text" placeholder="8008" name="port" ng-model="device.port" ng-pattern="/^[0-9]{1,7}$/" required device-feedback>
         </label>
         <!-- /.item -->
 
@@ -57,7 +57,7 @@
             <small class="assertive" ng-show="formSubmitted && deviceForm.user.$error.required">{{ 'DEVICES_DETAILS.editFormValidation.required' | translate }}</small>
           </span>
 
-          <input type="text" placeholder="popcorn" name="user" ng-model="device.user" required>
+          <input type="text" placeholder="popcorn" name="user" ng-model="device.user" required device-feedback>
         </label>
         <!-- /.item -->
 
@@ -66,7 +66,7 @@
             <small class="assertive" ng-show="formSubmitted && deviceForm.pass.$error.required">{{ 'DEVICES_DETAILS.editFormValidation.required' | translate }}</small>
           </span>
 
-          <input type="text" placeholder="popcorn" name="pass" ng-model="device.pass" required>
+          <input type="text" placeholder="popcorn" name="pass" ng-model="device.pass" required device-feedback>
         </label>
         <!-- /.item -->
 
@@ -74,10 +74,10 @@
       <!-- /.list -->
 
       <div class="button-bar">
-        <button type="submit" class="button button-small button-balanced" ng-click="submitAttempt();">{{ 'DEVICES_DETAILS.editFormButtons.saveButton' | translate }}</button>
-        <a class="button button-small button-royal" ng-click="setActive();">{{ 'DEVICES_DETAILS.editFormButtons.useButton' | translate }}</a>
-        <a class="button button-small button-energized" ng-click="testDevice(device);">{{ 'DEVICES_DETAILS.editFormButtons.testButton' | translate }}</a>
-        <a class="button button-small button-assertive" ng-click="remove();">{{ 'DEVICES_DETAILS.editFormButtons.deleteButton' | translate }}</a>
+        <button type="submit" class="button button-small button-balanced" ng-click="submitAttempt();" device-feedback>{{ 'DEVICES_DETAILS.editFormButtons.saveButton' | translate }}</button>
+        <a class="button button-small button-royal" ng-click="setActive();" device-feedback>{{ 'DEVICES_DETAILS.editFormButtons.useButton' | translate }}</a>
+        <a class="button button-small button-energized" ng-click="testDevice(device);" device-feedback>{{ 'DEVICES_DETAILS.editFormButtons.testButton' | translate }}</a>
+        <a class="button button-small button-assertive" ng-click="remove();" device-feedback>{{ 'DEVICES_DETAILS.editFormButtons.deleteButton' | translate }}</a>
       </div>
 
     </form>

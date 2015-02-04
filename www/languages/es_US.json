@@ -4,11 +4,38 @@
     "backButton": "Atrás"
   },
 
+  "SIDE": {
+    "loading": "Cargando...",
+    "noActivityAlert": {
+      "highlight": "Reproductor inactivo.",
+      "text": "En este momento no estás viendo películas ni series o se están cargando aún."
+    },
+    "movieSummary": {
+      "genre": "Género",
+      "director": "Director",
+      "IMDB": "Rating IMDB"
+    },
+    "showSummary": {
+      "episode": "Episodio",
+      "season": "Temporada"
+    },
+    "animeSummary": {
+      "notAvailable": "No hay información disponible para Anime aún."
+    }
+  },
+
   "REMOTE": {
     "tabTitle": "Control",
     "messages": {
       "connectingMessage": "Conectando...",
       "connectedMessage": "Dispositivo Conectado!"
+    },
+    "tabSelector": {
+      "tabSelectorTitle": "Seleccionar Pestaña",
+      "movies": "Películas",
+      "shows": "Shows",
+      "anime": "Anime",
+      "tabSelectorCancel": "Cancelar"  
     },
     "buttons": {
       "volumeButton": "Volumen",

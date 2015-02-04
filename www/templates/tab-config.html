@@ -35,7 +35,7 @@
             <small class="assertive" ng-show="deviceFormSubmitted && deviceForm.name.$error.required">{{ 'CONFIG.editFormValidation.required' | translate }}</small>
           </span>
 
-          <input type="text" placeholder="{{ 'CONFIG.deviceForm.namePlaceholder' | translate }}" name="name" ng-model="device.name" required>
+          <input type="text" placeholder="{{ 'CONFIG.deviceForm.namePlaceholder' | translate }}" name="name" ng-model="device.name" required device-feedback>
         </label>
         <!-- /.item -->
 
@@ -45,7 +45,7 @@
             <small class="assertive" ng-show="deviceFormSubmitted && deviceForm.ip.$error.pattern">{{ 'CONFIG.editFormValidation.format' | translate }}</small>
           </span>
 
-          <input type="text" placeholder="0.0.0.0" name="ip" ng-model="device.ip" ng-pattern='/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/' required>
+          <input type="text" placeholder="0.0.0.0" name="ip" ng-model="device.ip" ng-pattern='/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/' required device-feedback>
         </label>
         <!-- /.item -->
 
@@ -55,7 +55,7 @@
             <small class="assertive" ng-show="deviceFormSubmitted && deviceForm.port.$error.pattern">{{ 'CONFIG.editFormValidation.format' | translate }}</small>
           </span>
 
-          <input type="text" placeholder="8008" name="port" ng-model="device.port" ng-pattern="/^[0-9]{1,7}$/" required>
+          <input type="text" placeholder="8008" name="port" ng-model="device.port" ng-pattern="/^[0-9]{1,7}$/" required device-feedback>
         </label>
         <!-- /.item -->
 
@@ -64,7 +64,7 @@
             <small class="assertive" ng-show="deviceFormSubmitted && deviceForm.user.$error.required">{{ 'CONFIG.editFormValidation.required' | translate }}</small>
           </span>
 
-          <input type="text" placeholder="popcorn" name="user" ng-model="device.user" required>
+          <input type="text" placeholder="popcorn" name="user" ng-model="device.user" required device-feedback>
         </label>
         <!-- /.item -->
 
@@ -73,7 +73,7 @@
             <small class="assertive" ng-show="deviceFormSubmitted && deviceForm.pass.$error.required">{{ 'CONFIG.editFormValidation.required' | translate }}</small>
           </span>
 
-          <input type="text" placeholder="popcorn" name="pass" ng-model="device.pass" required>
+          <input type="text" placeholder="popcorn" name="pass" ng-model="device.pass" required device-feedback>
         </label>
         <!-- /.item -->
 
@@ -81,9 +81,9 @@
       <!-- /.list -->
 
       <div class="button-bar">
-        <button type="submit" class="button button-small button-assertive" ng-click="deviceSubmitAttempt();">{{ 'CONFIG.deviceFormButtons.addButton' | translate }}</button>
-        <a class="button button-small button-energized" ng-click="testDevice(device);">{{ 'CONFIG.deviceFormButtons.testButton' | translate }}</a>
-        <a class="button button-small button-royal" ng-click="readQR();">{{ 'CONFIG.deviceFormButtons.qrButton' | translate }}</a>
+        <button type="submit" class="button button-small button-assertive" ng-click="deviceSubmitAttempt();" device-feedback>{{ 'CONFIG.deviceFormButtons.addButton' | translate }}</button>
+        <a class="button button-small button-energized" ng-click="testDevice(device);" device-feedback>{{ 'CONFIG.deviceFormButtons.testButton' | translate }}</a>
+        <a class="button button-small button-royal" ng-click="readQR();" device-feedback>{{ 'CONFIG.deviceFormButtons.qrButton' | translate }}</a>
       </div>
 
     </form>
@@ -109,7 +109,7 @@
           <div class="input-label">
             {{ 'CONFIG.languageForm.select' | translate }}
           </div>
-          <select name="language" ng-model="language" ng-options="language.name for language in languages track by language.key"></select>
+          <select name="language" ng-model="language" ng-options="language.name for language in languages track by language.key" device-feedback></select>
         </label>
         <!-- /.item -->
 
@@ -117,7 +117,7 @@
       <!-- /.list -->
 
       <div class="button-bar">
-        <button type="submit" class="button button-small button-assertive">{{ 'CONFIG.languageForm.languageChangeButton' | translate }}</button>
+        <button type="submit" class="button button-small button-assertive" device-feedback>{{ 'CONFIG.languageForm.languageChangeButton' | translate }}</button>
       </div>
 
     </form>

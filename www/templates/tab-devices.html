@@ -3,7 +3,7 @@
   <ion-content class="padding">
    
     <div class="alert alert-info" ng-hide="devices">
-      <a href="#/tab/config"><strong>{{ 'DEVICES.noDeviceMsg' | translate }}</strong> <br> <small>{{ 'DEVICES.noDeviceHint' | translate }}</small></a>
+      <a ng-click="addDevice();" device-feedback><strong>{{ 'DEVICES.noDeviceMsg' | translate }}</strong> <br> <small>{{ 'DEVICES.noDeviceHint' | translate }}</small></a>
     </div>
     <!-- /.alert -->
 
@@ -11,7 +11,7 @@
       
       <div class="list card" ng-repeat="device in devices">
         
-        <a class="item item-avatar" href="#/tab/devices/{{$index}}" ng-class="device.active ? 'active-device' : false">
+        <a class="item item-avatar" ng-click="editDevice({{$index}})" ng-class="device.active ? 'active-device' : false" device-feedback>
           <img src="img/device.png">
           <span class="device-title">{{device.name}}</span>
           <span class="device-ip">{{device.ip}}</span>

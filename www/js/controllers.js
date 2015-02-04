@@ -136,10 +136,49 @@ angular.module('microwave.controllers', ['ionic', 'microwave.services'])
 /**
  * Devices List Controller.
  */
-.controller('DevicesCtrl', ['$scope', 'Devices', function($scope, Devices) {
+.controller('DevicesCtrl', ['$scope', '$location', '$ionicTabsDelegate', 'Devices', function($scope, $location, $ionicTabsDelegate, Devices) {
 
   // Gets the device list.
   $scope.devices = Devices.list();
+
+  // Navigate to the config tab.
+  $scope.addDevice = function() {
+
+    // Set the correct animation direction to get to the config tab.
+    $ionicTabsDelegate._instances[0].$scope.tabAnimation = 'left-right';
+
+    // Redirects to the config tab.
+    $location.path('/tab/config');
+
+  },
+
+  $scope.editDevice = function(index) {
+
+    $location.path('/tab/devices/' + index);
+
+    // Emit Device Feedback if enabled.
+    window.plugins.deviceFeedback.isFeedbackEnabled(function(feedback) {
+
+      DF = window.plugins.deviceFeedback;
+
+      if( feedback.haptic && feedback.acoustic ) {
+
+        DF.haptic(DF.VIRTUAL_KEY);
+        DF.acoustic(DF.VIRTUAL_KEY);
+
+      } else if( feedback.haptic ) {
+
+        DF.haptic(DF.VIRTUAL_KEY);
+
+      } else if( feedback.acoustic ) {
+
+        DF.acoustic(DF.VIRTUAL_KEY);
+
+      }
+
+    });
+
+  }
 
 }])
 
@@ -236,7 +275,32 @@ angular.module('microwave.controllers', ['ionic', 'microwave.services'])
         buttons: [
           { 
             text: $scope.translations['DEVICES_DETAILS.deleteModal.deleteModalCancel'],
-            type: 'button-small'
+            type: 'button-small',
+            onTap: function() {
+
+              // Emit Device Feedback if enabled.
+              window.plugins.deviceFeedback.isFeedbackEnabled(function(feedback) {
+
+                DF = window.plugins.deviceFeedback;
+
+                if( feedback.haptic && feedback.acoustic ) {
+
+                  DF.haptic(DF.VIRTUAL_KEY);
+                  DF.acoustic(DF.VIRTUAL_KEY);
+
+                } else if( feedback.haptic ) {
+
+                  DF.haptic(DF.VIRTUAL_KEY);
+
+                } else if( feedback.acoustic ) {
+
+                  DF.acoustic(DF.VIRTUAL_KEY);
+
+                }
+
+              });
+
+            }
           },
           {
             text: '<b>'+ $scope.translations['DEVICES_DETAILS.deleteModal.deleteModalDelete'] +'</b>',
@@ -244,6 +308,28 @@ angular.module('microwave.controllers', ['ionic', 'microwave.services'])
             onTap: function(event) {
 
               Devices.remove($stateParams.deviceId);
+
+              // Emit Device Feedback if enabled.
+              window.plugins.deviceFeedback.isFeedbackEnabled(function(feedback) {
+
+                DF = window.plugins.deviceFeedback;
+
+                if( feedback.haptic && feedback.acoustic ) {
+
+                  DF.haptic(DF.VIRTUAL_KEY);
+                  DF.acoustic(DF.VIRTUAL_KEY);
+
+                } else if( feedback.haptic ) {
+
+                  DF.haptic(DF.VIRTUAL_KEY);
+
+                } else if( feedback.acoustic ) {
+
+                  DF.acoustic(DF.VIRTUAL_KEY);
+
+                }
+
+              });
 
               // Redirects to the devices tab.
               $location.path('/tab/devices');
@@ -266,7 +352,7 @@ angular.module('microwave.controllers', ['ionic', 'microwave.services'])
 /**
  * Remote Control Controller.
  */
-.controller('RemoteCtrl', ['$scope', '$timeout', '$location', '$translate', '$ionicLoading', '$ionicPopup', 'Devices', 'Popcorn', function($scope, $timeout, $location, $translate, $ionicLoading, $ionicPopup, Devices, Popcorn) {
+.controller('RemoteCtrl', ['$scope', '$timeout', '$location', '$translate', '$ionicLoading', '$ionicPopup', '$ionicTabsDelegate', '$ionicActionSheet', 'Devices', 'Popcorn', function($scope, $timeout, $location, $translate, $ionicLoading, $ionicPopup, $ionicTabsDelegate, $ionicActionSheet, Devices, Popcorn) {
 
   // Get all stored devices.
   var devicesList = Devices.list();
@@ -325,12 +411,62 @@ angular.module('microwave.controllers', ['ionic', 'microwave.services'])
             buttons: [
               { 
                 text: $scope.translations['REMOTE.pingModal.pingModalDismiss'],
-                type: 'button-small'
+                type: 'button-small',
+                onTap: function() {
+
+                  // Emit Device Feedback if enabled.
+                  window.plugins.deviceFeedback.isFeedbackEnabled(function(feedback) {
+
+                    DF = window.plugins.deviceFeedback;
+
+                    if( feedback.haptic && feedback.acoustic ) {
+
+                      DF.haptic(DF.VIRTUAL_KEY);
+                      DF.acoustic(DF.VIRTUAL_KEY);
+
+                    } else if( feedback.haptic ) {
+
+                      DF.haptic(DF.VIRTUAL_KEY);
+
+                    } else if( feedback.acoustic ) {
+
+                      DF.acoustic(DF.VIRTUAL_KEY);
+
+                    }
+
+                  });
+
+                }
               },
               {
                 text: '<b>'+ $scope.translations['REMOTE.pingModal.pingModalDevices'] +'</b>',
                 type: 'button-assertive button-small',
                 onTap: function(event) {
+
+                  // Emit Device Feedback if enabled.
+                  window.plugins.deviceFeedback.isFeedbackEnabled(function(feedback) {
+
+                    DF = window.plugins.deviceFeedback;
+
+                    if( feedback.haptic && feedback.acoustic ) {
+
+                      DF.haptic(DF.VIRTUAL_KEY);
+                      DF.acoustic(DF.VIRTUAL_KEY);
+
+                    } else if( feedback.haptic ) {
+
+                      DF.haptic(DF.VIRTUAL_KEY);
+
+                    } else if( feedback.acoustic ) {
+
+                      DF.acoustic(DF.VIRTUAL_KEY);
+
+                    }
+
+                  });
+
+                  // Set the correct animation direction to get to the devices tab.
+                  $ionicTabsDelegate._instances[0].$scope.tabAnimation = 'left-right';
 
                   $location.path('/tab/devices');
 
@@ -365,12 +501,62 @@ angular.module('microwave.controllers', ['ionic', 'microwave.services'])
           buttons: [
             { 
               text: $scope.translations['REMOTE.noDeviceModal.noDeviceModalDismiss'],
-              type: 'button-small'
+              type: 'button-small',
+              onTap: function() {
+
+                // Emit Device Feedback if enabled.
+                window.plugins.deviceFeedback.isFeedbackEnabled(function(feedback) {
+
+                  DF = window.plugins.deviceFeedback;
+
+                  if( feedback.haptic && feedback.acoustic ) {
+
+                    DF.haptic(DF.VIRTUAL_KEY);
+                    DF.acoustic(DF.VIRTUAL_KEY);
+
+                  } else if( feedback.haptic ) {
+
+                    DF.haptic(DF.VIRTUAL_KEY);
+
+                  } else if( feedback.acoustic ) {
+
+                    DF.acoustic(DF.VIRTUAL_KEY);
+
+                  }
+
+                });
+
+              }
             },
             {
               text: '<b>'+ $scope.translations['REMOTE.noDeviceModal.noDeviceModalAdd'] +'</b>',
               type: 'button-assertive button-small',
               onTap: function(event) {
+
+                // Emit Device Feedback if enabled.
+                window.plugins.deviceFeedback.isFeedbackEnabled(function(feedback) {
+
+                  DF = window.plugins.deviceFeedback;
+
+                  if( feedback.haptic && feedback.acoustic ) {
+
+                    DF.haptic(DF.VIRTUAL_KEY);
+                    DF.acoustic(DF.VIRTUAL_KEY);
+
+                  } else if( feedback.haptic ) {
+
+                    DF.haptic(DF.VIRTUAL_KEY);
+
+                  } else if( feedback.acoustic ) {
+
+                    DF.acoustic(DF.VIRTUAL_KEY);
+
+                  }
+
+                });
+
+                // Set the correct animation direction to get to the config tab.
+                $ionicTabsDelegate._instances[0].$scope.tabAnimation = 'left-right';
 
                 $location.path('/tab/config');
 
@@ -388,6 +574,97 @@ angular.module('microwave.controllers', ['ionic', 'microwave.services'])
   $scope.toggleTab = function() {
     Popcorn.toggleTab();
   };
+
+  $scope.showTabs = function() {
+
+    // Calls the translation service before initializing the Tabs Action Sheet.
+    $translate(['REMOTE.tabSelector.tabSelectorTitle', 'REMOTE.tabSelector.movies', 'REMOTE.tabSelector.shows', 'REMOTE.tabSelector.anime', 'REMOTE.tabSelector.tabSelectorCancel']).then(function(translations) {
+
+      $scope.translations = translations;
+
+      // Shows action sheet with the Popcorn Tabs options.
+      $ionicActionSheet.show({
+        titleText: '<b>'+ $scope.translations['REMOTE.tabSelector.tabSelectorTitle'] +'</b>',
+        buttons: [
+          { text: '<b>'+ $scope.translations['REMOTE.tabSelector.movies'] +'</b>' },
+          { text: '<b>'+ $scope.translations['REMOTE.tabSelector.shows'] +'</b>' },
+          { text: '<b>'+ $scope.translations['REMOTE.tabSelector.anime'] +'</b>' },
+        ],
+        buttonClicked: function(index) {
+          
+          // Call the appropriate tab.
+          switch(index) {
+
+            case 0: 
+              Popcorn.moviesList();
+              break;
+
+            case 1: 
+              Popcorn.showsList();
+              break;
+
+            case 2: 
+              Popcorn.animeList();
+              break;
+
+          }
+
+          // Emit Device Feedback if enabled.
+          window.plugins.deviceFeedback.isFeedbackEnabled(function(feedback) {
+
+            DF = window.plugins.deviceFeedback;
+
+            if( feedback.haptic && feedback.acoustic ) {
+
+              DF.haptic(DF.VIRTUAL_KEY);
+              DF.acoustic(DF.VIRTUAL_KEY);
+
+            } else if( feedback.haptic ) {
+
+              DF.haptic(DF.VIRTUAL_KEY);
+
+            } else if( feedback.acoustic ) {
+
+              DF.acoustic(DF.VIRTUAL_KEY);
+
+            }
+
+          });
+
+          return true;
+
+        },
+        cancelText: '<span class="assertive">'+ $scope.translations['REMOTE.tabSelector.tabSelectorCancel'] +'</span>',
+        cancel: function() {
+
+          // Emit Device Feedback if enabled.
+          window.plugins.deviceFeedback.isFeedbackEnabled(function(feedback) {
+
+            DF = window.plugins.deviceFeedback;
+
+            if( feedback.haptic && feedback.acoustic ) {
+
+              DF.haptic(DF.VIRTUAL_KEY);
+              DF.acoustic(DF.VIRTUAL_KEY);
+
+            } else if( feedback.haptic ) {
+
+              DF.haptic(DF.VIRTUAL_KEY);
+
+            } else if( feedback.acoustic ) {
+
+              DF.acoustic(DF.VIRTUAL_KEY);
+
+            }
+
+          });
+
+        }
+      });
+
+    });
+
+  }
 
   $scope.showFavorites = function() {
     Popcorn.showFavorites();
@@ -436,13 +713,38 @@ angular.module('microwave.controllers', ['ionic', 'microwave.services'])
 
         // Displays filter modal.
         $ionicPopup.show({
-          template: '<div class="list"><label class="item item-input item-select"><div class="input-label">'+ $scope.translations['REMOTE.filterModal.filterModalDropdown'] +'</div><select name="genre" ng-model="filterOption.genre" ng-options="o as o for o in genresList"></select></label></div>',
+          template: '<div class="list"><label class="item item-input item-select"><div class="input-label">'+ $scope.translations['REMOTE.filterModal.filterModalDropdown'] +'</div><select name="genre" ng-model="filterOption.genre" ng-options="o as o for o in genresList" device-feedback></select></label></div>',
           title: $scope.translations['REMOTE.filterModal.filterModalTitle'],
           scope: $scope,
           buttons: [
             { 
               text: $scope.translations['REMOTE.filterModal.filterModalCancel'],
-              type: 'button-small'
+              type: 'button-small',
+              onTap: function() {
+
+                // Emit Device Feedback if enabled.
+                window.plugins.deviceFeedback.isFeedbackEnabled(function(feedback) {
+
+                  DF = window.plugins.deviceFeedback;
+
+                  if( feedback.haptic && feedback.acoustic ) {
+
+                    DF.haptic(DF.VIRTUAL_KEY);
+                    DF.acoustic(DF.VIRTUAL_KEY);
+
+                  } else if( feedback.haptic ) {
+
+                    DF.haptic(DF.VIRTUAL_KEY);
+
+                  } else if( feedback.acoustic ) {
+
+                    DF.acoustic(DF.VIRTUAL_KEY);
+
+                  }
+
+                });
+
+              }
             },
             {
               text: '<b>'+ $scope.translations['REMOTE.filterModal.filterModalFilter'] +'</b>',
@@ -452,6 +754,28 @@ angular.module('microwave.controllers', ['ionic', 'microwave.services'])
                 var selectedGenre = $scope.filterOption.genre || 'All';
                 
                 Popcorn.filterGenre(selectedGenre);
+
+                // Emit Device Feedback if enabled.
+                window.plugins.deviceFeedback.isFeedbackEnabled(function(feedback) {
+
+                  DF = window.plugins.deviceFeedback;
+
+                  if( feedback.haptic && feedback.acoustic ) {
+
+                    DF.haptic(DF.VIRTUAL_KEY);
+                    DF.acoustic(DF.VIRTUAL_KEY);
+
+                  } else if( feedback.haptic ) {
+
+                    DF.haptic(DF.VIRTUAL_KEY);
+
+                  } else if( feedback.acoustic ) {
+
+                    DF.acoustic(DF.VIRTUAL_KEY);
+
+                  }
+
+                });
 
               }
             },
@@ -478,13 +802,38 @@ angular.module('microwave.controllers', ['ionic', 'microwave.services'])
         $scope.translations = translations;
 
         $ionicPopup.show({
-          template: '<div class="list"><label class="item item-input item-select"><div class="input-label">'+ $scope.translations['REMOTE.sortModal.sortModalDropdown'] +'</div><select name="sort" ng-model="sortOption.sort" ng-options="o as o for o in sortersList"></select></label></div>',
+          template: '<div class="list"><label class="item item-input item-select"><div class="input-label">'+ $scope.translations['REMOTE.sortModal.sortModalDropdown'] +'</div><select name="sort" ng-model="sortOption.sort" ng-options="o as o for o in sortersList" device-feedback></select></label></div>',
           title: $scope.translations['REMOTE.sortModal.sortModalTitle'],
           scope: $scope,
           buttons: [
             { 
               text: $scope.translations['REMOTE.sortModal.sortModalCancel'],
-              type: 'button-small'
+              type: 'button-small',
+              onTap: function() {
+
+                // Emit Device Feedback if enabled.
+                window.plugins.deviceFeedback.isFeedbackEnabled(function(feedback) {
+
+                  DF = window.plugins.deviceFeedback;
+
+                  if( feedback.haptic && feedback.acoustic ) {
+
+                    DF.haptic(DF.VIRTUAL_KEY);
+                    DF.acoustic(DF.VIRTUAL_KEY);
+
+                  } else if( feedback.haptic ) {
+
+                    DF.haptic(DF.VIRTUAL_KEY);
+
+                  } else if( feedback.acoustic ) {
+
+                    DF.acoustic(DF.VIRTUAL_KEY);
+
+                  }
+
+                });
+
+              }
             },
             {
               text: '<b>'+ $scope.translations['REMOTE.sortModal.sortModalSort'] +'</b>',
@@ -494,6 +843,28 @@ angular.module('microwave.controllers', ['ionic', 'microwave.services'])
                 var selectedSorter = $scope.sortOption.sort || 'popularity';
                 
                 Popcorn.filterSorter(selectedSorter);
+
+                // Emit Device Feedback if enabled.
+                window.plugins.deviceFeedback.isFeedbackEnabled(function(feedback) {
+
+                  DF = window.plugins.deviceFeedback;
+
+                  if( feedback.haptic && feedback.acoustic ) {
+
+                    DF.haptic(DF.VIRTUAL_KEY);
+                    DF.acoustic(DF.VIRTUAL_KEY);
+
+                  } else if( feedback.haptic ) {
+
+                    DF.haptic(DF.VIRTUAL_KEY);
+
+                  } else if( feedback.acoustic ) {
+
+                    DF.acoustic(DF.VIRTUAL_KEY);
+
+                  }
+
+                });
 
               }
             },
@@ -629,13 +1000,38 @@ angular.module('microwave.controllers', ['ionic', 'microwave.services'])
         $scope.translations = translations;
 
         $ionicPopup.show({
-          template: '<div class="list"><label class="item item-input item-select"><div class="input-label">'+ $scope.translations['REMOTE.subtitlesModal.subtitlesModalDropdown'] +'</div><select name="language" ng-model="subtitleOption.subtitle" ng-options="o as o for o in subtitleList"></select></label></div>',
+          template: '<div class="list"><label class="item item-input item-select"><div class="input-label">'+ $scope.translations['REMOTE.subtitlesModal.subtitlesModalDropdown'] +'</div><select name="language" ng-model="subtitleOption.subtitle" ng-options="o as o for o in subtitleList" device-feedback></select></label></div>',
           title: $scope.translations['REMOTE.subtitlesModal.subtitlesModalTitle'],
           scope: $scope,
           buttons: [
             { 
               text: $scope.translations['REMOTE.subtitlesModal.subtitlesModalCancel'],
-              type: 'button-small'
+              type: 'button-small',
+              onTap: function() {
+
+                // Emit Device Feedback if enabled.
+                window.plugins.deviceFeedback.isFeedbackEnabled(function(feedback) {
+
+                  DF = window.plugins.deviceFeedback;
+
+                  if( feedback.haptic && feedback.acoustic ) {
+
+                    DF.haptic(DF.VIRTUAL_KEY);
+                    DF.acoustic(DF.VIRTUAL_KEY);
+
+                  } else if( feedback.haptic ) {
+
+                    DF.haptic(DF.VIRTUAL_KEY);
+
+                  } else if( feedback.acoustic ) {
+
+                    DF.acoustic(DF.VIRTUAL_KEY);
+
+                  }
+
+                });
+
+              }
             },
             {
               text: '<b>'+ $scope.translations['REMOTE.subtitlesModal.subtitlesModalSet'] +'</b>',
@@ -645,6 +1041,28 @@ angular.module('microwave.controllers', ['ionic', 'microwave.services'])
                 var selectedSubtitle = $scope.subtitleOption.subtitle || '';
                 
                 Popcorn.setSubtitle(selectedSubtitle);
+
+                // Emit Device Feedback if enabled.
+                window.plugins.deviceFeedback.isFeedbackEnabled(function(feedback) {
+
+                  DF = window.plugins.deviceFeedback;
+
+                  if( feedback.haptic && feedback.acoustic ) {
+
+                    DF.haptic(DF.VIRTUAL_KEY);
+                    DF.acoustic(DF.VIRTUAL_KEY);
+
+                  } else if( feedback.haptic ) {
+
+                    DF.haptic(DF.VIRTUAL_KEY);
+
+                  } else if( feedback.acoustic ) {
+
+                    DF.acoustic(DF.VIRTUAL_KEY);
+
+                  }
+
+                });
 
               }
             },
@@ -687,13 +1105,38 @@ angular.module('microwave.controllers', ['ionic', 'microwave.services'])
         $scope.translations = translations;
 
         $ionicPopup.show({
-          template: '<div class="list"><label class="item item-input item-select"><div class="input-label">'+ $scope.translations['REMOTE.playerModal.playerModalDropdown'] +'</div><select name="player" ng-model="playerOption.player" ng-options="o as o for o in playersList"></select></label></div>',
+          template: '<div class="list"><label class="item item-input item-select"><div class="input-label">'+ $scope.translations['REMOTE.playerModal.playerModalDropdown'] +'</div><select name="player" ng-model="playerOption.player" ng-options="o as o for o in playersList" device-feedback></select></label></div>',
           title: $scope.translations['REMOTE.playerModal.playerModalTitle'],
           scope: $scope,
           buttons: [
             { 
               text: $scope.translations['REMOTE.playerModal.playerModalCancel'],
-              type: 'button-small'
+              type: 'button-small',
+              onTap: function() {
+
+                // Emit Device Feedback if enabled.
+                window.plugins.deviceFeedback.isFeedbackEnabled(function(feedback) {
+
+                  DF = window.plugins.deviceFeedback;
+
+                  if( feedback.haptic && feedback.acoustic ) {
+
+                    DF.haptic(DF.VIRTUAL_KEY);
+                    DF.acoustic(DF.VIRTUAL_KEY);
+
+                  } else if( feedback.haptic ) {
+
+                    DF.haptic(DF.VIRTUAL_KEY);
+
+                  } else if( feedback.acoustic ) {
+
+                    DF.acoustic(DF.VIRTUAL_KEY);
+
+                  }
+
+                });
+
+              }
             },
             {
               text: '<b>'+ $scope.translations['REMOTE.playerModal.playerModalSelect'] +'</b>',
@@ -703,6 +1146,28 @@ angular.module('microwave.controllers', ['ionic', 'microwave.services'])
                 var selectedPlayer = $scope.playerOption.player || '';
                 
                 Popcorn.setPlayer(selectedPlayer);
+
+                // Emit Device Feedback if enabled.
+                window.plugins.deviceFeedback.isFeedbackEnabled(function(feedback) {
+
+                  DF = window.plugins.deviceFeedback;
+
+                  if( feedback.haptic && feedback.acoustic ) {
+
+                    DF.haptic(DF.VIRTUAL_KEY);
+                    DF.acoustic(DF.VIRTUAL_KEY);
+
+                  } else if( feedback.haptic ) {
+
+                    DF.haptic(DF.VIRTUAL_KEY);
+
+                  } else if( feedback.acoustic ) {
+
+                    DF.acoustic(DF.VIRTUAL_KEY);
+
+                  }
+
+                });
 
               }
             },
@@ -729,13 +1194,38 @@ angular.module('microwave.controllers', ['ionic', 'microwave.services'])
       $scope.translations = translations;
 
       var searchModal = $ionicPopup.show({
-        template: '<label class="item item-input"><input type="text" ng-model="searchString.term"></label>',
+        template: '<label class="item item-input"><input type="text" ng-model="searchString.term" device-feedback></label>',
         title: $scope.translations['REMOTE.searchModal.searchModalTitle'],
         scope: $scope,
         buttons: [
           { 
             text: $scope.translations['REMOTE.searchModal.searchModalCancel'],
-            type: 'button-small' 
+            type: 'button-small',
+            onTap: function() {
+
+              // Emit Device Feedback if enabled.
+                window.plugins.deviceFeedback.isFeedbackEnabled(function(feedback) {
+
+                  DF = window.plugins.deviceFeedback;
+
+                  if( feedback.haptic && feedback.acoustic ) {
+
+                    DF.haptic(DF.VIRTUAL_KEY);
+                    DF.acoustic(DF.VIRTUAL_KEY);
+
+                  } else if( feedback.haptic ) {
+
+                    DF.haptic(DF.VIRTUAL_KEY);
+
+                  } else if( feedback.acoustic ) {
+
+                    DF.acoustic(DF.VIRTUAL_KEY);
+
+                  }
+
+                });
+
+            }
           },
           { 
             text: $scope.translations['REMOTE.searchModal.searchModalClear'], 
@@ -745,6 +1235,28 @@ angular.module('microwave.controllers', ['ionic', 'microwave.services'])
               $scope.searchString.term = '';
               Popcorn.clearSearch();
 
+              // Emit Device Feedback if enabled.
+              window.plugins.deviceFeedback.isFeedbackEnabled(function(feedback) {
+
+                DF = window.plugins.deviceFeedback;
+
+                if( feedback.haptic && feedback.acoustic ) {
+
+                  DF.haptic(DF.VIRTUAL_KEY);
+                  DF.acoustic(DF.VIRTUAL_KEY);
+
+                } else if( feedback.haptic ) {
+
+                  DF.haptic(DF.VIRTUAL_KEY);
+
+                } else if( feedback.acoustic ) {
+
+                  DF.acoustic(DF.VIRTUAL_KEY);
+
+                }
+
+              });
+
             }
           },
           {
@@ -753,6 +1265,28 @@ angular.module('microwave.controllers', ['ionic', 'microwave.services'])
             onTap: function(event) {
 
               Popcorn.filterSearch($scope.searchString.term);
+
+              // Emit Device Feedback if enabled.
+              window.plugins.deviceFeedback.isFeedbackEnabled(function(feedback) {
+
+                DF = window.plugins.deviceFeedback;
+
+                if( feedback.haptic && feedback.acoustic ) {
+
+                  DF.haptic(DF.VIRTUAL_KEY);
+                  DF.acoustic(DF.VIRTUAL_KEY);
+
+                } else if( feedback.haptic ) {
+
+                  DF.haptic(DF.VIRTUAL_KEY);
+
+                } else if( feedback.acoustic ) {
+
+                  DF.acoustic(DF.VIRTUAL_KEY);
+
+                }
+
+              });
 
             }
           },
@@ -764,3 +1298,151 @@ angular.module('microwave.controllers', ['ionic', 'microwave.services'])
   };
 
 }])
+
+
+/**
+ * Side Drawer Controller.
+ */
+.controller('SideDrawerCtrl', ['$scope', '$ionicSideMenuDelegate', '$ionicLoading', '$translate', 'Popcorn', 'OMDB', 'TRAKT', function($scope, $ionicSideMenuDelegate, $ionicLoading, $translate, Popcorn, OMDB, TRAKT) {
+
+  // Check if the Side Drawer is open
+  $scope.$watch($ionicSideMenuDelegate.isOpenRight, function(isOpen) { 
+    
+    if (isOpen) {
+
+      // Get information about whats currently playing.
+      Popcorn.getPlaying().then(function(playing) {
+
+        // Checks if the user is currently watching something (even if its paused).
+        if ( playing && playing.result.title ) {
+
+          $scope.watching = true;
+          $scope.movie = playing.result.movie; // Check if whats being played is a movie.
+
+        } else {
+
+          $scope.watching = false;
+
+        }
+
+        // If a movie is being played get data from OMDB.
+        if ( $scope.watching && $scope.movie ) {
+
+          $scope.anime = false;
+          $scope.show = false;
+
+          // Shows a connecting message while the API is being pinged to check for conenction.
+          $translate(['SIDE.loading']).then(function(translations) {
+
+            $scope.translations = translations;
+
+            $ionicLoading.show({
+              template: $scope.translations['SIDE.loading'],
+              duration: 10000
+            });
+
+          });
+
+          OMDB.getById(playing.result.imdb_id).then(function(omdb) {
+
+            $scope.id = omdb.imdbID;
+            $scope.poster = omdb.Poster;
+            $scope.title = omdb.Title;
+            $scope.year = omdb.Year;
+            $scope.runTime = omdb.Runtime;
+            $scope.plot = omdb.Plot;
+            $scope.genre = omdb.Genre;
+            $scope.director = omdb.Director;
+            $scope.rating = omdb.imdbRating;
+
+            $ionicLoading.hide();
+
+          });
+
+        }
+
+        // If a tv show or anime is being played get data from.
+        if ( $scope.watching && !$scope.movie ) {
+
+          // If the id is not numeric then get Anime data.
+          if ( isNaN(playing.result.tvdb_id) ) {
+
+            $scope.anime = true;
+            $scope.show = false;
+            // TO-DO: Get data for anime series.
+
+          } 
+
+          // If the id is numeric then get TV Show data.
+          else {
+            
+             // Shows a connecting message while the API is being pinged to check for conenction.
+            $translate(['SIDE.loading']).then(function(translations) {
+
+              $scope.translations = translations;
+
+              $ionicLoading.show({
+                template: $scope.translations['SIDE.loading'],
+                duration: 10000
+              });
+
+            });
+
+            TRAKT.getById(playing.result.tvdb_id).then(function(trakt) {
+
+              var maxIndex = trakt.length -1;
+                  theShow = trakt[maxIndex].show,
+                  theEpisode = trakt[maxIndex].episode;
+
+              $scope.slug = theShow.ids.slug;
+              $scope.poster = theShow.images.poster.thumb;
+              $scope.title = theShow.title;
+              $scope.year = theShow.year;
+              $scope.plot = theShow.overview;
+              
+              if ( theEpisode ) {
+
+                $scope.episode = theEpisode.title;
+                $scope.episodeNum = theEpisode.number;
+                $scope.seasonNum = theEpisode.season;
+
+              } else {
+
+                $scope.episodeNum = playing.result.episode;
+                $scope.seasonNum = playing.result.season;
+
+              }
+
+              $scope.anime = false;
+              $scope.show = true;
+
+              $ionicLoading.hide();
+
+            });
+
+          }
+
+        }
+
+      });
+
+    }
+
+    // Opens IMDB link in system browser.
+    $scope.openIMDB = function(id) {
+
+      window.open('http://imdb.com/title/' + id, '_system', 'location=yes');
+
+    }
+
+
+    // Opens TRAKT link in system browser.
+    $scope.openTRAKT = function(slug) {
+
+      window.open('http://trakt.tv/shows/' + slug, '_system', 'location=yes');
+
+    }
+
+  });
+
+}]);

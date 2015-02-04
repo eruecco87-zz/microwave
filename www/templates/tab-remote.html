@@ -5,19 +5,19 @@
     <div class="row">
 
       <div class="col col-25">
-        <button class="button button-small button-block button-assertive" ng-click="toggleTab();"><i class="icon ion-more"></i></button>
+        <button class="button button-small button-block button-assertive" ng-click="showTabs();" device-feedback><i class="icon ion-more"></i></button>
       </div>
 
       <div class="col col-25">
-        <button class="button button-small button-block button-balanced" ng-click="showFavorites();"><i class="icon ion-ios-heart"></i></button>
+        <button class="button button-small button-block button-balanced" ng-click="showFavorites();" device-feedback><i class="icon ion-ios-heart"></i></button>
       </div>
 
       <div class="col col-25">
-        <button class="button button-small button-block button-calm" ng-click="showWatchlist();"><i class="icon ion-ios-filing"></i></button>
+        <button class="button button-small button-block button-calm" ng-click="showWatchlist();" device-feedback><i class="icon ion-ios-filing"></i></button>
       </div>
 
       <div class="col col-25">
-        <button class="button button-small button-block button-energized" ng-click="showSettings();"><i class="icon ion-android-settings"></i></button>
+        <button class="button button-small button-block button-energized" ng-click="showSettings();" device-feedback><i class="icon ion-android-settings"></i></button>
       </div>
 
     </div>
@@ -26,15 +26,15 @@
     <div class="row">
 
       <div class="col col-33">
-        <button class="button button-block button-light" ng-click="showFilterOptions();"><i class="icon ion-funnel"></i></button>
+        <button class="button button-block button-light" ng-click="showFilterOptions();" device-feedback><i class="icon ion-funnel"></i></button>
       </div>
 
       <div class="col col-33">
-        <button class="button button-block button-dark" ng-click="up();"><i class="icon ion-arrow-up-b"></i></button>
+        <button class="button button-block button-dark" ng-click="up();" device-feedback><i class="icon ion-arrow-up-b"></i></button>
       </div>
 
       <div class="col col-33">
-        <button class="button button-block button-light" ng-click="showSortOptions();"><i class="icon ion-android-list"></i></button>
+        <button class="button button-block button-light" ng-click="showSortOptions();" device-feedback><i class="icon ion-android-list"></i></button>
       </div>
 
     </div>
@@ -43,15 +43,15 @@
     <div class="row">
 
       <div class="col col-33">
-        <button class="button button-block button-dark" ng-click="left();"><i class="icon ion-arrow-left-b"></i></button>
+        <button class="button button-block button-dark" ng-click="left();" device-feedback><i class="icon ion-arrow-left-b"></i></button>
       </div>
 
       <div class="col col-33">
-        <button class="button button-block button-dark" ng-click="enter();"><i class="icon ion-ios-circle-filled"></i></button>
+        <button class="button button-block button-dark" ng-click="enter();" device-feedback><i class="icon ion-ios-circle-filled"></i></button>
       </div>
 
       <div class="col col-33">
-        <button class="button button-block button-dark" ng-click="right();"><i class="icon ion-arrow-right-b"></i></button>
+        <button class="button button-block button-dark" ng-click="right();" device-feedback><i class="icon ion-arrow-right-b"></i></button>
       </div>
 
     </div>
@@ -60,28 +60,15 @@
     <div class="row">
 
       <div class="col col-33">
-        <button class="button button-block button-light" ng-click="back();"><i class="icon ion-arrow-return-left"></i></button>
+        <button class="button button-block button-light" ng-click="back();" device-feedback><i class="icon ion-arrow-return-left"></i></button>
       </div>
 
       <div class="col col-33">
-        <button class="button button-block button-dark" ng-click="down();"><i class="icon ion-arrow-down-b"></i></button>
+        <button class="button button-block button-dark" ng-click="down();" device-feedback><i class="icon ion-arrow-down-b"></i></button>
       </div>
 
       <div class="col col-33">
-        <button class="button button-block button-light" ng-click="toggleMute();"><i class="icon ion-android-microphone-off"></i></button>
-      </div>
-
-    </div>
-    <!-- /.row -->
-
-    <div class="row">
-
-      <div class="col col-50">
-        <button class="button button-small button-block button-royal" ng-click="seasonUp();">{{ 'REMOTE.buttons.seasonButton' | translate }} &nbsp;<i class="icon ion-arrow-up-b"></i></button>
-      </div>
-
-      <div class="col col-50">
-        <button class="button button-small button-block button-royal" ng-click="seasonDown();">{{ 'REMOTE.buttons.seasonButton' | translate }} &nbsp;<i class="icon ion-arrow-down-b"></i></button>
+        <button class="button button-block button-light" ng-click="toggleMute();" device-feedback><i class="icon ion-android-microphone-off"></i></button>
       </div>
 
     </div>
@@ -90,11 +77,11 @@
     <div class="row">
 
       <div class="col col-50">
-        <button class="button button-block button-calm" ng-click="volumeUp();">{{ 'REMOTE.buttons.volumeButton' | translate }} &nbsp;<i class="icon ion-chevron-up"></i></button>
+        <button class="button button-small button-block button-royal" ng-click="seasonUp();" device-feedback>{{ 'REMOTE.buttons.seasonButton' | translate }} &nbsp;<i class="icon ion-arrow-up-b"></i></button>
       </div>
 
       <div class="col col-50">
-        <button class="button button-block button-calm" ng-click="volumeDown();">{{ 'REMOTE.buttons.volumeButton' | translate }} &nbsp;<i class="icon ion-chevron-down"></i></button>
+        <button class="button button-small button-block button-royal" ng-click="seasonDown();" device-feedback>{{ 'REMOTE.buttons.seasonButton' | translate }} &nbsp;<i class="icon ion-arrow-down-b"></i></button>
       </div>
 
     </div>
@@ -103,11 +90,24 @@
     <div class="row">
 
       <div class="col col-50">
-        <button class="button button-block button-small button-stable" ng-click="subtitleOffsetMore();">{{ 'REMOTE.buttons.subtitleOffsetButton' | translate }}&nbsp;<i class="icon ion-android-add-circle"></i></button>
+        <button class="button button-block button-calm" ng-click="volumeUp();" device-feedback>{{ 'REMOTE.buttons.volumeButton' | translate }} &nbsp;<i class="icon ion-chevron-up"></i></button>
       </div>
 
       <div class="col col-50">
-        <button class="button button-block button-small button-stable" ng-click="subtitleOffsetLess();">{{ 'REMOTE.buttons.subtitleOffsetButton' | translate }}&nbsp;<i class="icon ion-android-remove-circle"></i></button>
+        <button class="button button-block button-calm" ng-click="volumeDown();" device-feedback>{{ 'REMOTE.buttons.volumeButton' | translate }} &nbsp;<i class="icon ion-chevron-down"></i></button>
+      </div>
+
+    </div>
+    <!-- /.row -->
+
+    <div class="row">
+
+      <div class="col col-50">
+        <button class="button button-block button-small button-stable" ng-click="subtitleOffsetMore();" device-feedback>{{ 'REMOTE.buttons.subtitleOffsetButton' | translate }}&nbsp;<i class="icon ion-android-add-circle"></i></button>
+      </div>
+
+      <div class="col col-50">
+        <button class="button button-block button-small button-stable" ng-click="subtitleOffsetLess();" device-feedback>{{ 'REMOTE.buttons.subtitleOffsetButton' | translate }}&nbsp;<i class="icon ion-android-remove-circle"></i></button>
       </div>
 
     </div>
@@ -116,19 +116,19 @@
     <div class="row">
 
       <div class="col col-25">
-        <button class="button button-small button-block button-dark" ng-click="play();"><i class="icon ion-play"></i></button>
+        <button class="button button-small button-block button-dark" ng-click="play();" device-feedback><i class="icon ion-play"></i></button>
       </div>
 
       <div class="col col-25">
-        <button class="button button-small button-block button-dark" ng-click="pause();"><i class="icon ion-pause"></i></button>
+        <button class="button button-small button-block button-dark" ng-click="pause();" device-feedback><i class="icon ion-pause"></i></button>
       </div>
 
       <div class="col col-25">
-        <button class="button button-small button-block button-dark" ng-click="backward();"><i class="icon ion-skip-backward"></i></button>
+        <button class="button button-small button-block button-dark" ng-click="backward();" device-feedback><i class="icon ion-skip-backward"></i></button>
       </div>
 
       <div class="col col-25">
-        <button class="button button-small button-block button-dark" ng-click="forward();"><i class="icon ion-skip-forward"></i></button>
+        <button class="button button-small button-block button-dark" ng-click="forward();" device-feedback><i class="icon ion-skip-forward"></i></button>
       </div>
 
     </div>
@@ -137,19 +137,19 @@
     <div class="row">
 
       <div class="col col-25">
-        <button class="button button-small button-block button-dark" ng-click="toggleWatched();"><i class="icon ion-eye"></i></button>
+        <button class="button button-small button-block button-dark" ng-click="toggleWatched();" device-feedback><i class="icon ion-eye"></i></button>
       </div>
 
       <div class="col col-25">
-        <button class="button button-small button-block button-dark" ng-click="toggleFavorite();"><i class="icon ion-heart"></i></button>
+        <button class="button button-small button-block button-dark" ng-click="toggleFavorite();" device-feedback><i class="icon ion-heart"></i></button>
       </div>
 
       <div class="col col-25">
-        <button class="button button-small button-block button-dark" ng-click="showSubtitleList();"><i class="icon ion-closed-captioning"></i></button>
+        <button class="button button-small button-block button-dark" ng-click="showSubtitleList();" device-feedback><i class="icon ion-closed-captioning"></i></button>
       </div>
 
       <div class="col col-25">
-        <button class="button button-small button-block button-dark" ng-click="toggleQuality();"><i class="icon ion-toggle-filled"></i></button>
+        <button class="button button-small button-block button-dark" ng-click="toggleQuality();" device-feedback><i class="icon ion-toggle-filled"></i></button>
       </div>
 
     </div>
@@ -158,19 +158,19 @@
     <div class="row">
       
       <div class="col col-25">
-        <button class="button button-small button-block button-dark" ng-click="watchTrailer();"><i class="icon ion-film-marker"></i></button>
+        <button class="button button-small button-block button-dark" ng-click="watchTrailer();" device-feedback><i class="icon ion-film-marker"></i></button>
       </div>
 
       <div class="col col-25">
-        <button class="button button-small button-block button-dark" ng-click="showPlayerList();"><i class="icon ion-android-film"></i></button>
+        <button class="button button-small button-block button-dark" ng-click="showPlayerList();" device-feedback><i class="icon ion-android-film"></i></button>
       </div>
 
       <div class="col col-25">
-        <button class="button button-small button-block button-dark" ng-click="toggleFullscreen();"><i class="icon ion-arrow-expand"></i></button>
+        <button class="button button-small button-block button-dark" ng-click="toggleFullscreen();" device-feedback><i class="icon ion-arrow-expand"></i></button>
       </div>
 
       <div class="col col-25">
-        <button class="button button-small button-block button-assertive" ng-click="showSearchForm();"><i class="icon ion-search"></i></button>
+        <button class="button button-small button-block button-assertive" ng-click="showSearchForm();" device-feedback><i class="icon ion-search"></i></button>
       </div>
 
     </div>

@@ -10090,5 +10090,16 @@ $ios-transition-box-shadow-end: -200px 0px 200px rgba(0,0,0,0.15), -5px 0px 5px 
 .config-form {
   margin-bottom: 20px; }
 
+.menu {
+  background: #5e5e5e;
+  color: #fff; }
+  .menu .card {
+    margin-top: 2px; }
+  .menu .ng-hide {
+    display: none !important; }
+
+.menu-content {
+  border-right: 1px solid #444 !important; }
+
 .main-view {
   background: #fff; }

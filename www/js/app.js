@@ -7,8 +7,9 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('microwave', ['ionic', 'pascalprecht.translate', 'ngCordova', 'microwave.directives', 'microwave.controllers', 'microwave.services'])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform, $rootScope) {
   $ionicPlatform.ready(function() {
+    
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
     if(window.cordova && window.cordova.plugins.Keyboard) {
@@ -18,6 +19,7 @@ angular.module('microwave', ['ionic', 'pascalprecht.translate', 'ngCordova', 'mi
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
+
   });
 })
 

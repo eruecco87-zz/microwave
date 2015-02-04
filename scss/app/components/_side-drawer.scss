@@ -1,0 +1,16 @@
+.menu {
+  background: lighten($dark, 10%);
+  color: $light;
+
+  .card {
+    margin-top: 2px;
+  }
+
+  .ng-hide {
+    display: none !important;
+  }
+}
+
+.menu-content {
+  border-right: 1px solid $dark !important;
+}

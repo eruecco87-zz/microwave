@@ -330,6 +330,27 @@ angular.module('microwave.services', ['angular-json-rpc'])
 
     },
 
+    moviesList: function() {
+      
+      jsonRPC('movieslist', []);
+      return deferred.promise;
+
+    },
+
+    showsList: function() {
+      
+      jsonRPC('showslist', []);
+      return deferred.promise;
+
+    },
+
+    animeList: function() {
+      
+      jsonRPC('animelist', []);
+      return deferred.promise;
+
+    },
+
     showFavorites: function() {
       
       jsonRPC('showfavourites', []);
@@ -548,5 +569,99 @@ angular.module('microwave.services', ['angular-json-rpc'])
     }
 
   }
+
+}])
+
+
+/**
+ * OMDB API Wrapper.
+ */
+.factory('OMDB', ['$http', '$q', function($http, $q) {
+
+  // Global deferred object to return API responses.
+  var deferred;
+  
+  // Wrapper for OMDB API calls.
+  var OMDBAPI = function(url) {
+
+    // Deferred object instantiation.
+    deferred = $q.defer();
+
+    // Makes the API call and sets the global deferred object with the response.
+    $http.jsonp(url).success(function(data){
+      
+      deferred.resolve(data);
+
+    }).error(function(error, status, headers){
+
+      deferred.resolve(false);
+
+    });
+
+  }
+
+  /**
+   * This are all the OMDB API Methods used.
+   */
+  return {
+
+    // Find the movie by IMDB id.
+    getById: function(imdb_id) {
+
+      var url = 'http://www.omdbapi.com?i=' + imdb_id + '&tomatoes=true&callback=JSON_CALLBACK';
+
+      OMDBAPI(url);
+      return deferred.promise;
+
+    }
+
+  } 
+
+}])
+
+
+/**
+ * TRAKT TV API Wrapper.
+ */
+.factory('TRAKT', ['$http', '$q', function($http, $q) {
+
+  // Global deferred object to return API responses.
+  var deferred;
+  
+  // Wrapper for TRAKT API calls.
+  var TRAKTAPI = function(url) {
+
+    // Deferred object instantiation.
+    deferred = $q.defer();
+
+    // Makes the API call and sets the global deferred object with the response.
+    $http.get(url).success(function(data){
+      
+      deferred.resolve(data);
+
+    }).error(function(error, status, headers){
+
+      deferred.resolve(false);
+
+    });
+
+  }
+
+  /**
+   * This are all the TRAKT API Methods used.
+   */
+  return {
+
+    // Find the movie by IMDB id.
+    getById: function(tvdb_id) {
+
+      var url = 'http://oscarviquez.com/trakt/?tvdb_id=' + tvdb_id;
+
+      TRAKTAPI(url);
+      return deferred.promise;
+
+    }
+
+  } 
 
 }]);
