@@ -35,6 +35,28 @@ angular.module('microwave.directives', ['ionic'])
 
           }
 
+          // Emit Device Feedback if enabled.
+          window.plugins.deviceFeedback.isFeedbackEnabled(function(feedback) {
+
+            DF = window.plugins.deviceFeedback;
+
+            if( feedback.haptic && feedback.acoustic ) {
+
+              DF.haptic(DF.VIRTUAL_KEY);
+              DF.acoustic(DF.VIRTUAL_KEY);
+
+            } else if( feedback.haptic ) {
+
+              DF.haptic(DF.VIRTUAL_KEY);
+
+            } else if( feedback.acoustic ) {
+
+              DF.acoustic(DF.VIRTUAL_KEY);
+
+            }
+
+          });
+
         }, element);
 
         
@@ -54,7 +76,29 @@ angular.module('microwave.directives', ['ionic'])
               $ionicTabsDelegate.$getByHandle(attrs.delegateHandle).select(selectedTabIndex - 1);
             }, 100);
 
-          }        
+          }
+
+          // Emit Device Feedback if enabled.
+          window.plugins.deviceFeedback.isFeedbackEnabled(function(feedback) {
+
+            DF = window.plugins.deviceFeedback;
+
+            if( feedback.haptic && feedback.acoustic ) {
+
+              DF.haptic(DF.VIRTUAL_KEY);
+              DF.acoustic(DF.VIRTUAL_KEY);
+
+            } else if( feedback.haptic ) {
+
+              DF.haptic(DF.VIRTUAL_KEY);
+
+            } else if( feedback.acoustic ) {
+
+              DF.acoustic(DF.VIRTUAL_KEY);
+
+            }
+
+          }); 
 
         }, element);
 
