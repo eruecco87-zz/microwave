@@ -3,7 +3,7 @@ Microwave
 
 An Android remote control app for [Popcorn Time](https://popcorntime.io/) made with [Ionic Framework](http://ionicframework.com/)
 
-#### [Download in Google Play](https://play.google.com/store/apps/details?id=com.eruecco.microwave)
+### [Download](https://www.dropbox.com/s/caldhdd1ebluha9/Microwave.apk?dl=0)
 
 ---
 
