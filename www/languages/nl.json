@@ -1,0 +1,166 @@
+{
+  
+  "GENERAL": {
+    "backButton": "Terug"
+  },
+
+  "SIDE": {
+    "loading": "Fetching Information...",
+    "noActivityAlert": {
+      "highlight": "Player inactive.",
+      "text": "You're currently not watching anything or the player is still loading."
+    },
+    "movieSummary": {
+      "genre": "Genre",
+      "director": "Director",
+      "IMDB": "IMDB Rating"
+    },
+    "showSummary": {
+      "episode": "Aflevering",
+      "season": "Seizoen"
+    },
+    "animeSummary": {
+      "notAvailable": "No information is available for Anime yet."
+    }
+  },
+
+  "REMOTE": {
+    "tabTitle": "Remote",
+    "messages": {
+      "connectingMessage": "Connecting...",
+      "connectedMessage": "Device Connected!"
+    },
+    "tabSelector": {
+      "tabSelectorTitle": "Select Tab",
+      "movies": "Movies",
+      "shows": "Shows",
+      "anime": "Anime",
+      "tabSelectorCancel": "Cancel"  
+    },
+    "buttons": {
+      "volumeButton": "Volume",
+      "seasonButton": "Seizoen",
+      "subtitleOffsetButton": "Subtitle Offset"
+    },
+    "noDeviceModal": {
+      "noDeviceModalTitle": "No Devices Found",
+      "noDeviceModalText": "You have not setup any devices yet.",
+      "noDeviceModalDismiss": "Dismiss",
+      "noDeviceModalAdd": "Add Device"
+    },
+    "pingModal": {
+      "pingModalTitle": "Connection Error",
+      "pingModalText": "The selected device was not able to connect to Popcorn Time.",
+      "pingModalDismiss": "Dismiss",
+      "pingModalDevices": "Manage Devices"
+    },
+    "filterModal": {
+      "filterModalTitle": "Select Genre",
+      "filterModalDropdown": "Genre",
+      "filterModalCancel": "Cancel",
+      "filterModalFilter": "Filter"
+    },
+    "sortModal": {
+      "sortModalTitle": "Sort List",
+      "sortModalDropdown": "Sort by",
+      "sortModalCancel": "Cancel",
+      "sortModalSort": "Sort"
+    },
+    "subtitlesModal": {
+      "subtitlesModalTitle": "Select Subtitles",
+      "subtitlesModalDropdown": "Language",
+      "subtitlesModalCancel": "Cancel",
+      "subtitlesModalSet": "Set"
+    },
+    "playerModal": {
+      "playerModalTitle": "Select Player",
+      "playerModalDropdown": "Player",
+      "playerModalCancel": "Cancel",
+      "playerModalSelect": "Select"
+    },
+    "searchModal": {
+      "searchModalTitle": "Search",
+      "searchModalCancel": "Cancel",
+      "searchModalClear": "Clear",
+      "searchModalGo": "Go"
+    }
+  },
+
+  "DEVICES": {
+    "tabTitle": "Devices",
+    "noDeviceMsg": "There are no devices set up.",
+    "noDeviceHint": "Go to the configuration tab and add one!"
+  },
+
+  "DEVICES_DETAILS": {
+    "tabTitle": "Edit Device",
+    "alerts": {
+      "APItestSuccess": "@:CONFIG.alerts.APItestSuccess",
+      "APItestFail": "@:CONFIG.alerts.APItestFail",
+      "APIversion": "@:CONFIG.alerts.APIversion",
+      "APIerror": "@:CONFIG.alerts.APIerror",
+      "changesSaved": "Wijzigingen opgeslagen!"
+    },
+    "editForm": {
+      "name": "@:CONFIG.deviceForm.name",
+      "namePlaceholder": "@:CONFIG.deviceForm.namePlaceholder",
+      "ip": "@:CONFIG.deviceForm.ip",
+      "port": "@:CONFIG.deviceForm.port",
+      "username": "@:CONFIG.deviceForm.username",
+      "password": "@:CONFIG.deviceForm.password"
+    },
+    "editFormButtons": {
+      "saveButton": "Opslaan",
+      "useButton": "Use",
+      "testButton": "Test",
+      "deleteButton": "Verwijder"
+    },
+    "editFormValidation": {
+      "required": "@:CONFIG.editFormValidation.required",
+      "format": "@:CONFIG.editFormValidation.format"
+    },
+    "deleteModal": {
+      "deleteModalTitle": "Verwijder apparaat",
+      "deleteModalText": "Bent u zeker dat u dit apparaat wilt verwijderen?",
+      "deleteModalCancel": "Annuleer",
+      "deleteModalDelete": "Verwijder"
+    }
+  },
+
+  "CONFIG": {
+    "tabTitle": "Configuration",
+    "alerts": {
+      "languageChange": "De taal is gewijzigd!",
+      "APItestSuccess": "U bent verbonden met Popcorn Time.",
+      "APItestFail": "U bent NIET verbonden met Popcorn Time.",
+      "APIversion": "API Versie",
+      "APIerror": "API Error",
+      "changesSaved": "Apparaat toegevoegd!"
+    },
+    "languageForm": {
+      "title": "Taal",
+      "select": "Selecteer Taal",
+      "languageChangeButton": "Taal instellen"
+    },
+    "deviceForm": {
+      "title": "Een apparaat toevoegen",
+      "name": "Naam",
+      "namePlaceholder": "Apparaatnaam",
+      "ip": "IP",
+      "port": "Poort",
+      "username": "Gebruikersnaam",
+      "password": "Wachtwoord"
+    },
+    "deviceFormButtons": {
+      "addButton": "Add",
+      "testButton": "Test",
+      "qrButton": "Scan QR"
+    },
+    "editFormValidation": {
+      "required": "This is required.",
+      "format": "Incorrect format."
+    },
+    "scannedDeviceName": "Scanned Device"
+  }
+
+}
